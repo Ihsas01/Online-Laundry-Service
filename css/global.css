@@ -1,0 +1,188 @@
+/* Global Styles for Header-Body Spacing */
+
+/* Add top padding to body to account for fixed header */
+body {
+    padding-top: 80px; /* Adjust based on header height */
+}
+
+/* Alternative: Add margin-top to main content areas */
+main,
+.main-content,
+.content-wrapper,
+.page-content {
+    margin-top: 20px; /* Additional spacing after header */
+}
+
+/* Specific spacing for different page types */
+
+/* Home page spacing */
+.hero-section {
+    margin-top: -80px; /* Negative margin to pull hero section up */
+    padding-top: 80px; /* Add padding to account for header */
+}
+
+/* About page spacing */
+.about-main,
+.about-content {
+    margin-top: 20px;
+}
+
+/* Order page spacing */
+.order-main {
+    margin-top: 20px;
+}
+
+/* Service page spacing */
+.service-main,
+.service-content {
+    margin-top: 20px;
+}
+
+/* Contact page spacing */
+.contact-main,
+.contact-content {
+    margin-top: 20px;
+}
+
+/* Login/Signup page spacing */
+.login-main,
+.signup-main,
+.auth-main {
+    margin-top: 20px;
+}
+
+/* User profile page spacing */
+.user-main,
+.profile-main {
+    margin-top: 20px;
+}
+
+/* Admin dashboard spacing */
+.admin-main,
+.dashboard-main {
+    margin-top: 20px;
+}
+
+/* Footer spacing */
+footer {
+    margin-top: 40px; /* Space between content and footer */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        padding-top: 70px; /* Slightly less padding on mobile */
+    }
+    
+    .hero-section {
+        margin-top: -70px;
+        padding-top: 70px;
+    }
+    
+    main,
+    .main-content,
+    .content-wrapper,
+    .page-content {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 60px; /* Even less padding on small screens */
+    }
+    
+    .hero-section {
+        margin-top: -60px;
+        padding-top: 60px;
+    }
+    
+    main,
+    .main-content,
+    .content-wrapper,
+    .page-content {
+        margin-top: 10px;
+    }
+}
+
+/* Ensure proper spacing for pages with progress bars or navigation */
+.progress-section {
+    margin-top: 0; /* No extra margin for progress sections */
+}
+
+/* Spacing for pages with full-width sections */
+.full-width-section {
+    margin-top: 0;
+    padding-top: 20px;
+}
+
+/* Container spacing */
+.container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Section spacing */
+section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+section:first-child {
+    margin-top: 0;
+}
+
+/* Form spacing */
+form {
+    margin-top: 20px;
+}
+
+/* Table spacing */
+table {
+    margin-top: 20px;
+}
+
+/* Card spacing */
+.card,
+.card-container {
+    margin-top: 20px;
+}
+
+/* Button group spacing */
+.button-group,
+.action-buttons {
+    margin-top: 20px;
+}
+
+/* Ensure proper z-index for fixed elements */
+.header {
+    z-index: 1000;
+}
+
+.notification,
+.modal,
+.dropdown-menu {
+    z-index: 1001;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px; /* Account for fixed header when scrolling to anchors */
+}
+
+/* Loading states */
+.loading {
+    margin-top: 20px;
+}
+
+/* Print styles */
+@media print {
+    body {
+        padding-top: 0;
+    }
+    
+    .header {
+        position: static;
+    }
+} 

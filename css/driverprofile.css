@@ -1,0 +1,122 @@
+body {
+    background: url('../images/newbac4.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.image {
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    float: right;
+}
+
+.h3 {
+    text-align: center;
+    font-size: 40px;
+}
+
+.free {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-left: 40px;
+    backdrop-filter: blur(5px);
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.6);
+}
+
+.form1,
+.form2,
+.form3 {
+    margin-bottom: 20px;
+}
+
+.form1 {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.cls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.a {
+    text-decoration: none;
+    color: rgb(15, 167, 227);
+    font-size: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+input {
+    width: 250px;
+    height: 40px;
+    background-color: whitesmoke;
+    color: black;
+    border-radius: 10px;
+    padding-left: 10px;
+    outline: none;
+    margin-bottom: 25px;
+    font-size: 15px;
+}
+
+.lite {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.a:hover {
+    color: #150def;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="phone"],
+input[type="date"] {
+    width: 90%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+input[type="phone"] {
+    width: 90%;
+}
+
+.lite h2 {
+    margin-bottom: 10px;
+}
+
+.link {
+    margin-bottom: 10px;
+}
+
+.link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+.form2,
+.form3 {
+    flex-basis: 48%;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    backdrop-filter: blur(5px);
+    box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.6);
+}

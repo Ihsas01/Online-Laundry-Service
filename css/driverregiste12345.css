@@ -1,0 +1,97 @@
+body {
+    background: url('../images/newbac.jpeg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.border {
+    border: 1px solid #444a53;
+    width: 50%;
+    margin: 10px auto;
+    backdrop-filter: blur(6px);
+    position: relative;
+}
+
+.label {
+    font-size: 20px;
+    font-weight: 15px;
+}
+
+.line input,
+.username input {
+    width: 250px;
+    height: 40px;
+    background-color: whitesmoke;
+    padding-left: 10px;
+    font-size: 15px;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px 0 0;
+    border: 2px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+input[type="submit"] {
+    width: 500px;
+    padding: 10px;
+    background-color: #1abc9c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: green;
+}
+
+.box {
+    text-align: center;
+    border-radius: 5px;
+    padding: 15px;
+    justify-content: center;
+    width: 500px;
+    margin-left: 15%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dinfo {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-right: 10%;
+}
+
+.main_form {
+    display: flex;
+}
+
+.line {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 8px;
+}
+
+.three {
+    padding-top: 8px;
+}
+
+.username>input {
+    margin: 5px 5px;
+}

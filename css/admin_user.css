@@ -1,0 +1,49 @@
+.col-10{
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+}
+.col-4{
+    width: 33.33%;
+    height: 220px;
+}
+.head{
+    display: flex;
+    flex-direction: row;
+    padding: 10px 15px;
+}
+.sec-line, .third-line{
+    display: flex;
+    padding: 10px 15px;
+    width: 100%;
+    padding-left: 10%;
+}
+
+.total{
+    background: white;
+    height: 100%;
+    width: 75%;
+    border-radius: 10px;
+    padding-top: 50px;
+    padding-left: 20px;
+}
+
+.dash{
+    font-size: 36px;
+    color: white;
+}
+
+table{
+    border: 2px solid white;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+}
+
+.icon-right{
+    display: flex;
+    float: right;
+    overflow: hidden;
+    padding-left: 88%;
+}
+

@@ -1,0 +1,131 @@
+        body {
+            font-family: Arial, sans-serif;
+            height: 100%;
+            width: 100%;
+            background: url('/Images/bac1.avif');
+            background-repeat: no-repeat;
+            background-position: fixed;
+            background-size: cover;
+            position: relative;
+        }
+        
+        .driver {
+            border-radius: 10px;
+            border: 2px solid black;
+            height: auto;
+            width: 900px;
+            margin: 50px auto;
+            backdrop-filter: blur(30px);
+        }
+        
+        table {
+            width: 100%;
+        }
+        
+        th {
+            font-size: 20px;
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        td {
+            padding: 10px;
+        }
+        
+        input {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        input[type="submit"] {
+            width: 500px;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: green;
+        }
+        
+        a {
+            text-decoration: none;
+            color: rgb(15, 167, 227);
+            font-size: 20px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        
+        a:hover {
+            color: #150def;
+        }
+        
+        p {
+            text-align: center;
+            font-size: 25px;
+            justify-content: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        
+        .box {
+            text-align: center;
+            border-radius: 5px;
+            padding: 15px;
+            justify-content: center;
+            width: 500px;
+            padding-left: 45%;
+        }
+        
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        
+        input[type="radio"] {
+            width: 60px;
+            height: 20px;
+            margin: 0 5px 0 0;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        
+        .condition {
+            height: 150px;
+        }
+        
+        .vehicle {
+            height: 40px;
+            width: 150px;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+        
+        label {
+            font-size: 20px;
+            font-weight: 500px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        
+        h3 {
+            font-size: 25px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            text-decoration: underline;
+            text-align: center;
+            color: rgb(0, 0, 0);
+        }
+        
+        h2 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            text-decoration: underline;
+        }

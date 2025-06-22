@@ -1,0 +1,46 @@
+.col-10{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.col-6{
+    width: 50%;
+    height: 220px;
+    padding: 10px 15px;
+}
+
+.dash, .greet{
+    font-size: 36px;
+    color: white;
+    display: block;
+}
+.head{
+    display: flex;
+    flex-direction: row;
+    padding: 10px 15px;
+}
+
+.sec-line, .third-line{
+    display: flex;
+    padding: 10px 15px;
+    
+}
+
+.users{
+    background: rgb(113,132,133);
+    height: 100%;
+    width: 75%;
+    border-radius: 10px;
+    padding-top: 50px;
+    padding-left: 30px;
+    margin: 0 auto;
+    font-family: "Concert One", sans-serif;
+    
+}
+
+.greet{
+    text-align: center;
+}
+
+

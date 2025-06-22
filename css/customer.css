@@ -1,0 +1,141 @@
+*{
+    margin: 0;
+    padding: 0;
+
+}
+
+.customer{
+    
+    width: 1100px;
+    height: 470px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-left: 210px;
+    background:linear-gradient(rgb(143, 143, 234),rgb(199, 235, 249));
+    
+    /*background-color: rgb(199, 235, 249);*/
+    
+
+}
+.support{
+    width: 400px;
+    height: auto;
+    font-size: 50px;
+    letter-spacing: 1px;
+    display: inline;
+    padding-top: 100px;
+    padding-left: 80px;
+    float: left;
+
+}
+p{
+    font-size: 25px;
+    padding-top: 40px;
+}
+
+.image{
+    padding: 30px;
+    
+}
+.image img{
+    width: 500px;
+    height:400px;
+    float: right;
+
+}
+.inform{
+    width: 500px;
+    height: 550px;
+    padding-top: 20px;
+
+} 
+
+legend{
+    font-size: 17px;
+    margin-left: 50px;
+}
+
+fieldset{
+
+    width: 500px;
+    height: 520px;
+    margin-left: 500px;
+    backdrop-filter: blur(15px);
+
+}
+.items{
+    
+    padding-bottom: 20px;
+    padding-left: 30px;
+}
+
+
+label{
+    font-size: 20px;
+    color: rgb(19, 28, 84);
+    font-weight: bold;
+    letter-spacing: 1px;   
+    
+}
+label.name{
+    color: rgb(19, 28, 84);
+
+}
+ 
+
+
+input{
+    
+    width: 200px;
+    filter: opacity(0.5);
+}
+select{
+    width: 200px;
+    filter: opacity(0.5);
+}
+textarea{
+    filter: opacity(0.5);
+    font-size: 15px;
+}
+.how{
+    text-align: center;
+    font-size: 40px;
+    letter-spacing: 2px;
+    color: rgb(1, 122, 122);
+    margin-bottom: 40px;
+
+}
+.buttons{
+    text-align: center;
+    align-items: center;
+    
+}
+.buttons button{
+    width: 100px;
+    height: 25px;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: rgb(191, 193, 216);
+    cursor: pointer;
+    border-color: rgb(191, 193, 216);
+    opacity: 0.7;
+    
+}
+button:hover{
+    background-color: rgb(95, 121, 223);
+    border-color: rgb(95, 121, 223);
+}
+
+.background{
+    background-image: url('../images/young-man-and-woman-with-headphones-microphone-and-computer-customer-service-support-or-call-center-concept-free-vector.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;   
+
+}
+
+
+
+
+  

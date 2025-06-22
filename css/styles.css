@@ -1,0 +1,160 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+#menu{
+    background: rgb(59, 53, 53);
+    width:20%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+#menu >.logo > img{
+    width: 40px;
+}
+
+
+#menu >.logo{
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding:30px 0 0 30px;
+}
+
+#menu >.items{
+    margin-top: 40px;
+}
+
+#menu >.items >li{
+    list-style-type: none;
+    padding: 15px 0;
+    transition: 0.3 ease;
+
+}
+#menu .items li:hover{
+    background: #242424;
+    cursor: pointer;
+}
+#menu .items li:nth-child(1){
+    border-left: 4px solid #fff;
+}
+
+
+#menu >.items >li >i{
+    color: rgb(134,141,151);
+    width:30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 14px;
+    margin: 0 10px 0 25px;
+}
+
+#menu .items li > a{
+    text-decoration: none;
+    color: rgb(134,141,151);
+    font-weight: 300px;
+    transition: 0.3 ease;
+}
+
+.interface{
+    width: 80%;
+    margin-left: 310px;
+    position: relative;
+}
+
+.interface .navigate{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 15px 30px;
+    border-bottom: 3px solid green;
+}
+
+.interface .navigate .search{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 14px;
+    border: 1px solid #d7dbe6;
+    border-radius: 4px;
+    margin-right: 14px;
+}
+
+.interface .navigate .search input{
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.interface .navigate .profile{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.interface .navigate .profile i{
+    margin-right: 20px;
+    font-size: 19px;
+    font-weight: 400px;
+}
+.i-name{
+    color: #444a53;
+    padding: 30px 30px 0 30px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.values{
+    padding: 30px 30px 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.values .val-box{
+     background: #444a53;
+     width: 235px;
+     padding: 16px 20px;
+     border-radius: 5px;
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+
+}
+
+.values .val-box i{
+    font-size: 25px;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+    background: chartreuse;
+    margin-right: 15px;
+}
+
+.values .val-box h3{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.board{
+    width: 100%;
+    margin: 30px 0 30px 30px;
+    overflow: auto;
+    background: #fff;
+    border-radius: 8px;
+}
+

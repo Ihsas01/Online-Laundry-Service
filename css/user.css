@@ -1,0 +1,87 @@
+    img {
+        width: 150px;
+        height: 150px;
+        cursor: pointer;
+    }
+    
+    p {
+        text-align: center;
+        font-size: 20px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+    
+    .user {
+        width: auto;
+        height: auto;
+        flex-direction: column;
+        display: flex;
+    }
+    
+    .history {
+        border: 2px solid black;
+        align-items: center;
+        border-collapse: collapse;
+        margin-left: 150px;
+    }
+    
+    th {
+        font-size: 20px;
+    }
+    
+    td {
+        width: 25px;
+        height: 25px;
+        font-size: 25px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    div {
+        text-align: center;
+        display: inline;
+        color: #0b0b0b;
+        margin: 20px auto;
+        font-size: 17px;
+    }
+    
+    .link a {
+        text-decoration: dashed;
+        transition: .3s linear;
+        color: gray;
+        font-size: 17px;
+    }
+    
+    .link a:hover {
+        text-decoration: underline;
+        color: rgb(66, 25, 215);
+    }
+    
+    fieldset {
+        border-radius: 25px;
+        height: 1100px;
+        width: 1000px;
+        margin: 0 auto;
+    }
+    
+    img {
+        float: right;
+    }
+    
+    .details {
+        border-style: none;
+    }
+    
+    input {
+        width: 250px;
+        height: 40px;
+        background-color: whitesmoke;
+        color: black;
+        border-radius: 10px;
+        padding-left: 10px;
+        outline: none;
+        margin-bottom: 25px;
+        font-size: 15px;
+    }
+    
+    h3 {
+        font-size: 30px;
+    }
