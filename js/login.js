@@ -1,5 +1,13 @@
 // Enhanced Login Page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS library
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true,
+        offset: 100
+    });
+    
     // Initialize all interactive features
     initParticleSystem();
     initFormValidation();
@@ -13,7 +21,424 @@ document.addEventListener('DOMContentLoaded', function() {
     initHoverEffects();
     initKeyboardNavigation();
     initAccessibility();
+    initDarkMode();
+    initFloatingActionButton();
+    initLoadingOverlay();
 });
+
+// Dark Mode Toggle
+function initDarkMode() {
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        themeToggle.classList.add('dark');
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        themeToggle.classList.toggle('dark');
+        
+        // Save preference
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        
+        // Add ripple effect
+        addRippleEffect(themeToggle);
+        
+        // Trigger theme change animation
+        triggerThemeChangeAnimation();
+    });
+}
+
+function triggerThemeChangeAnimation() {
+    const elements = document.querySelectorAll('.login-wrapper, .branding-section, .login-section');
+    elements.forEach(element => {
+        element.style.transition = 'all 0.5s ease';
+        setTimeout(() => {
+            element.style.transition = '';
+        }, 500);
+    });
+}
+
+// Floating Action Button
+function initFloatingActionButton() {
+    const fabButton = document.getElementById('fabButton');
+    const fabContainer = document.getElementById('fabContainer');
+    
+    fabButton.addEventListener('click', () => {
+        fabContainer.classList.toggle('active');
+        addRippleEffect(fabButton);
+    });
+    
+    // Close FAB menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!fabContainer.contains(e.target)) {
+            fabContainer.classList.remove('active');
+        }
+    });
+}
+
+// Help Modal Functions
+function showHelpModal() {
+    const helpModal = document.getElementById('helpModal');
+    helpModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    
+    // Add entrance animation
+    helpModal.querySelector('.modal-content').style.animation = 'modalSlideIn 0.3s ease-out';
+}
+
+function closeHelpModal() {
+    const helpModal = document.getElementById('helpModal');
+    helpModal.classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+function showTutorial() {
+    // Show a quick tutorial overlay
+    showLoadingOverlay('Loading tutorial...');
+    
+    setTimeout(() => {
+        hideLoadingOverlay();
+        showSuccessNotification('Tutorial feature coming soon!');
+    }, 2000);
+}
+
+function toggleAccessibility() {
+    const body = document.body;
+    body.classList.toggle('high-contrast');
+    
+    // Save accessibility preference
+    const isHighContrast = body.classList.contains('high-contrast');
+    localStorage.setItem('accessibility', isHighContrast ? 'high-contrast' : 'normal');
+    
+    showSuccessNotification(isHighContrast ? 'High contrast mode enabled' : 'High contrast mode disabled');
+}
+
+// Loading Overlay
+function initLoadingOverlay() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    
+    // Auto-hide after page load
+    setTimeout(() => {
+        loadingOverlay.classList.remove('show');
+    }, 1000);
+}
+
+function showLoadingOverlay(message = 'Loading...') {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loadingText = loadingOverlay.querySelector('p');
+    
+    loadingText.textContent = message;
+    loadingOverlay.classList.add('show');
+}
+
+function hideLoadingOverlay() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    loadingOverlay.classList.remove('show');
+}
+
+// Enhanced Form Submission with Loading
+function initFormSubmission() {
+    const form = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    
+    form.addEventListener('submit', function(e) {
+        // Don't prevent default - let the form submit normally
+        // Just add visual feedback
+        
+        if (!validateForm(e)) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Show loading state
+        loginBtn.classList.add('loading');
+        showLoadingOverlay('Signing you in...');
+        
+        // Let the form submit naturally - the loading overlay will show until page redirects
+        // The PHP will handle the actual login logic and redirect
+    });
+}
+
+// Enhanced Social Login
+function handleSocialLogin(provider) {
+    showLoadingOverlay(`Connecting to ${provider}...`);
+    
+    // Simulate social login
+    setTimeout(() => {
+        hideLoadingOverlay();
+        showSuccessNotification(`${provider} login feature coming soon!`);
+    }, 2000);
+}
+
+// Enhanced Password Reset
+function sendResetEmail() {
+    const email = document.getElementById('resetEmail').value;
+    
+    if (!isValidEmail(email)) {
+        showFormError('Please enter a valid email address');
+        return;
+    }
+    
+    const resetBtn = document.querySelector('.reset-btn');
+    resetBtn.classList.add('loading');
+    
+    // Simulate API call
+    setTimeout(() => {
+        resetBtn.classList.remove('loading');
+        closeModal();
+        showSuccessNotification('Password reset link sent to your email!');
+    }, 2000);
+}
+
+// Enhanced Animations
+function initAnimations() {
+    // Add scroll-triggered animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements for animation
+    document.querySelectorAll('.feature-item, .stat-item').forEach(el => {
+        observer.observe(el);
+    });
+    
+    // Add hover animations
+    document.querySelectorAll('.feature-item, .stat-item, .alt-btn').forEach(el => {
+        el.addEventListener('mouseenter', addHoverEffect);
+        el.addEventListener('mouseleave', removeHoverEffect);
+    });
+}
+
+// Enhanced Error Handling
+function initErrorHandling() {
+    // Global error handler
+    window.addEventListener('error', (e) => {
+        console.error('Global error:', e.error);
+        showFormError('An unexpected error occurred. Please try again.');
+    });
+    
+    // Unhandled promise rejection handler
+    window.addEventListener('unhandledrejection', (e) => {
+        console.error('Unhandled promise rejection:', e.reason);
+        showFormError('An unexpected error occurred. Please try again.');
+    });
+}
+
+function showFormError(message) {
+    const errorMessage = document.getElementById('errorMessage');
+    
+    if (!errorMessage) {
+        // Create error message if it doesn't exist
+        const form = document.getElementById('loginForm');
+        const newError = document.createElement('div');
+        newError.className = 'error-message';
+        newError.id = 'errorMessage';
+        newError.innerHTML = `
+            <div class="error-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="error-content">
+                <span class="error-title">Error</span>
+                <span class="error-text">${message}</span>
+            </div>
+            <button type="button" class="error-close" onclick="closeError()">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        form.insertBefore(newError, form.firstChild);
+    } else {
+        errorMessage.querySelector('.error-text').textContent = message;
+    }
+    
+    // Add shake animation
+    errorMessage.style.animation = 'shake 0.5s ease-in-out';
+    setTimeout(() => {
+        errorMessage.style.animation = '';
+    }, 500);
+    
+    errorMessage.style.display = 'flex';
+}
+
+function closeError() {
+    const errorMessage = document.getElementById('errorMessage');
+    if (errorMessage) {
+        errorMessage.style.animation = 'slideOutUp 0.3s ease';
+        setTimeout(() => {
+            if (errorMessage.parentNode) {
+                errorMessage.remove();
+            }
+        }, 300);
+    }
+}
+
+// Enhanced Hover Effects
+function initHoverEffects() {
+    // Add hover effects to interactive elements
+    const interactiveElements = document.querySelectorAll('.login-btn, .social-btn, .alt-btn, .forgot-password');
+    
+    interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', addHoverEffect);
+        element.addEventListener('mouseleave', removeHoverEffect);
+    });
+}
+
+function addHoverEffect(e) {
+    const element = e.target;
+    element.style.transform = 'translateY(-2px)';
+    element.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+}
+
+function removeHoverEffect(e) {
+    const element = e.target;
+    element.style.transform = '';
+    element.style.boxShadow = '';
+}
+
+// Enhanced Keyboard Navigation
+function initKeyboardNavigation() {
+    const form = document.getElementById('loginForm');
+    const inputs = form.querySelectorAll('input');
+    
+    inputs.forEach((input, index) => {
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && index < inputs.length - 1) {
+                e.preventDefault();
+                inputs[index + 1].focus();
+            }
+        });
+    });
+}
+
+// Enhanced Accessibility
+function initAccessibility() {
+    // Add ARIA labels and roles
+    const loginBtn = document.getElementById('loginBtn');
+    const passwordToggle = document.querySelector('.password-toggle');
+    
+    if (loginBtn) {
+        loginBtn.setAttribute('aria-label', 'Sign in to your account');
+    }
+    
+    if (passwordToggle) {
+        passwordToggle.setAttribute('aria-label', 'Show password');
+    }
+    
+    // Add skip link for screen readers
+    const skipLink = document.createElement('a');
+    skipLink.href = '#loginForm';
+    skipLink.textContent = 'Skip to login form';
+    skipLink.className = 'skip-link';
+    skipLink.style.cssText = `
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: #667eea;
+        color: white;
+        padding: 8px;
+        text-decoration: none;
+        border-radius: 4px;
+        z-index: 1000;
+        transition: top 0.3s;
+    `;
+    
+    skipLink.addEventListener('focus', () => {
+        skipLink.style.top = '6px';
+    });
+    
+    skipLink.addEventListener('blur', () => {
+        skipLink.style.top = '-40px';
+    });
+    
+    document.body.appendChild(skipLink);
+}
+
+// Enhanced Success Notification
+function showSuccessNotification(message) {
+    const notification = document.getElementById('successNotification');
+    const messageEl = notification.querySelector('.notification-message');
+    
+    messageEl.textContent = message;
+    notification.classList.add('show');
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 5000);
+}
+
+// Enhanced Ripple Effect
+function addRippleEffect(element) {
+    const ripple = document.createElement('span');
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+        pointer-events: none;
+    `;
+    
+    element.style.position = 'relative';
+    element.appendChild(ripple);
+    
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
+}
+
+// Add ripple animation CSS
+const rippleStyle = document.createElement('style');
+rippleStyle.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+    
+    @keyframes slideOutUp {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+    }
+`;
+document.head.appendChild(rippleStyle);
 
 // Particle System for Background
 function initParticleSystem() {
@@ -250,61 +675,18 @@ function initSocialButtons() {
     const socialButtons = document.querySelectorAll('.social-btn');
     
     socialButtons.forEach(btn => {
-        btn.addEventListener('click', handleSocialLogin);
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const provider = btn.classList.contains('google-btn') ? 'google' : 'facebook';
+            handleSocialLogin(provider);
+        });
         btn.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                handleSocialLogin(e);
+                const provider = btn.classList.contains('google-btn') ? 'google' : 'facebook';
+                handleSocialLogin(provider);
             }
         });
-    });
-}
-
-function handleSocialLogin(e) {
-    e.preventDefault();
-    const btn = e.target.closest('.social-btn');
-    const provider = btn.classList.contains('google-btn') ? 'Google' : 'Facebook';
-    
-    // Show loading state
-    const originalContent = btn.innerHTML;
-    btn.innerHTML = `
-        <div class="spinner"></div>
-        <span>Connecting to ${provider}...</span>
-    `;
-    btn.disabled = true;
-    btn.classList.add('loading');
-    
-    // Simulate social login (replace with actual implementation)
-    setTimeout(() => {
-        showFormError(`${provider} login is not implemented yet. Please use the regular login form.`);
-        btn.innerHTML = originalContent;
-        btn.disabled = false;
-        btn.classList.remove('loading');
-    }, 2000);
-}
-
-// Enhanced Form Submission
-function initFormSubmission() {
-    const form = document.getElementById('loginForm');
-    const loginBtn = document.getElementById('loginBtn');
-    
-    form.addEventListener('submit', function(e) {
-        if (!validateForm(e)) return;
-        
-        // Show loading state
-        loginBtn.classList.add('loading');
-        loginBtn.disabled = true;
-        
-        // Simulate form processing (remove in production)
-        setTimeout(() => {
-            // Show success state briefly before redirect
-            loginBtn.classList.remove('loading');
-            loginBtn.classList.add('success');
-            
-            setTimeout(() => {
-                // Form will submit normally
-            }, 1000);
-        }, 1500);
     });
 }
 
@@ -353,256 +735,12 @@ function closeModal() {
     document.body.style.overflow = '';
 }
 
-function sendResetEmail() {
-    const emailInput = document.getElementById('resetEmail');
-    const resetBtn = document.querySelector('.reset-btn');
-    const email = emailInput.value.trim();
-    
-    if (!email) {
-        showFieldError(emailInput, 'Please enter your email address');
-        return;
-    }
-    
-    if (!isValidEmail(email)) {
-        showFieldError(emailInput, 'Please enter a valid email address');
-        return;
-    }
-    
-    // Show loading state
-    resetBtn.classList.add('loading');
-    resetBtn.disabled = true;
-    
-    // Simulate API call
-    setTimeout(() => {
-        resetBtn.classList.remove('loading');
-        resetBtn.disabled = false;
-        
-        closeModal();
-        showSuccessNotification('Password reset link sent to your email.');
-        
-        // Clear form
-        emailInput.value = '';
-    }, 2000);
-}
-
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
 
-// Enhanced Animations
-function initAnimations() {
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    // Observe elements for animation
-    const animatedElements = document.querySelectorAll('.feature-item, .stat-item, .alt-btn');
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-}
-
-// Enhanced Error Handling
-function initErrorHandling() {
-    // Global error handler
-    window.addEventListener('error', (e) => {
-        console.error('Global error:', e.error);
-        showFormError('An unexpected error occurred. Please try again.');
-    });
-    
-    // Unhandled promise rejection handler
-    window.addEventListener('unhandledrejection', (e) => {
-        console.error('Unhandled promise rejection:', e.reason);
-        showFormError('An unexpected error occurred. Please try again.');
-    });
-}
-
-function showFormError(message) {
-    // Remove existing error message
-    const existingError = document.getElementById('errorMessage');
-    if (existingError) {
-        existingError.remove();
-    }
-    
-    // Create new error message
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message';
-    errorDiv.id = 'errorMessage';
-    errorDiv.innerHTML = `
-        <div class="error-icon">
-            <i class="fas fa-exclamation-triangle"></i>
-        </div>
-        <div class="error-content">
-            <span class="error-title">Error</span>
-            <span class="error-text">${message}</span>
-        </div>
-        <button type="button" class="error-close" onclick="closeError()">
-            <i class="fas fa-times"></i>
-        </button>
-    `;
-    
-    // Insert at the beginning of the form
-    const form = document.getElementById('loginForm');
-    form.insertBefore(errorDiv, form.firstChild);
-    
-    // Auto-hide after 5 seconds
-    setTimeout(() => {
-        if (errorDiv.parentNode) {
-            closeError();
-        }
-    }, 5000);
-}
-
-function closeError() {
-    const errorMessage = document.getElementById('errorMessage');
-    if (errorMessage) {
-        errorMessage.style.animation = 'slideOutUp 0.3s ease';
-        setTimeout(() => {
-            if (errorMessage.parentNode) {
-                errorMessage.remove();
-            }
-        }, 300);
-    }
-}
-
-// Enhanced Hover Effects
-function initHoverEffects() {
-    // Add hover effects to interactive elements
-    const interactiveElements = document.querySelectorAll('.login-btn, .social-btn, .alt-btn, .forgot-password');
-    
-    interactiveElements.forEach(element => {
-        element.addEventListener('mouseenter', addHoverEffect);
-        element.addEventListener('mouseleave', removeHoverEffect);
-    });
-}
-
-function addHoverEffect(e) {
-    const element = e.target;
-    element.style.transform = 'translateY(-2px)';
-    element.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-}
-
-function removeHoverEffect(e) {
-    const element = e.target;
-    element.style.transform = '';
-    element.style.boxShadow = '';
-}
-
-// Enhanced Keyboard Navigation
-function initKeyboardNavigation() {
-    const form = document.getElementById('loginForm');
-    const inputs = form.querySelectorAll('input');
-    
-    inputs.forEach((input, index) => {
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && index < inputs.length - 1) {
-                e.preventDefault();
-                inputs[index + 1].focus();
-            }
-        });
-    });
-}
-
-// Enhanced Accessibility
-function initAccessibility() {
-    // Add ARIA labels and roles
-    const loginBtn = document.getElementById('loginBtn');
-    const passwordToggle = document.querySelector('.password-toggle');
-    
-    if (loginBtn) {
-        loginBtn.setAttribute('aria-label', 'Sign in to your account');
-    }
-    
-    if (passwordToggle) {
-        passwordToggle.setAttribute('aria-label', 'Show password');
-    }
-    
-    // Add skip link for screen readers
-    const skipLink = document.createElement('a');
-    skipLink.href = '#loginForm';
-    skipLink.textContent = 'Skip to login form';
-    skipLink.className = 'skip-link';
-    skipLink.style.cssText = `
-        position: absolute;
-        top: -40px;
-        left: 6px;
-        background: #667eea;
-        color: white;
-        padding: 8px;
-        text-decoration: none;
-        border-radius: 4px;
-        z-index: 1000;
-        transition: top 0.3s;
-    `;
-    
-    skipLink.addEventListener('focus', () => {
-        skipLink.style.top = '6px';
-    });
-    
-    skipLink.addEventListener('blur', () => {
-        skipLink.style.top = '-40px';
-    });
-    
-    document.body.appendChild(skipLink);
-}
-
-// Success Notification
-function showSuccessNotification(message) {
-    const notification = document.getElementById('successNotification');
-    const messageElement = notification.querySelector('.notification-message');
-    
-    messageElement.textContent = message;
-    notification.classList.add('show');
-    
-    // Auto-hide after 4 seconds
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 4000);
-}
-
 // Utility Functions
-function addRippleEffect(element) {
-    const ripple = document.createElement('span');
-    const rect = element.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = event.clientX - rect.left - size / 2;
-    const y = event.clientY - rect.top - size / 2;
-    
-    ripple.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}px;
-        top: ${y}px;
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        transform: scale(0);
-        animation: ripple 0.6s linear;
-        pointer-events: none;
-    `;
-    
-    element.appendChild(ripple);
-    
-    setTimeout(() => {
-        ripple.remove();
-    }, 600);
-}
-
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -615,36 +753,6 @@ function debounce(func, wait) {
     };
 }
 
-// Add ripple animation CSS
-const rippleStyle = document.createElement('style');
-rippleStyle.textContent = `
-    @keyframes ripple {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-    
-    @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-5px); }
-        75% { transform: translateX(5px); }
-    }
-    
-    @keyframes slideOutUp {
-        from {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        to {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-    }
-`;
-document.head.appendChild(rippleStyle);
-
-// Performance optimization
 function throttle(func, limit) {
     let inThrottle;
     return function() {
@@ -658,18 +766,15 @@ function throttle(func, limit) {
     };
 }
 
-// Initialize performance optimizations
-const throttledScroll = throttle(() => {
-    // Handle scroll events efficiently
-}, 16);
-
-window.addEventListener('scroll', throttledScroll);
-
 // Cleanup function
 function cleanup() {
     // Remove event listeners and clean up resources
-    window.removeEventListener('scroll', throttledScroll);
+    const elements = document.querySelectorAll('*');
+    elements.forEach(element => {
+        const clone = element.cloneNode(true);
+        element.parentNode.replaceChild(clone, element);
+    });
 }
 
-// Cleanup on page unload
+// Initialize cleanup on page unload
 window.addEventListener('beforeunload', cleanup); 
