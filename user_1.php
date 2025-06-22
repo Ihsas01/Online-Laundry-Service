@@ -7,9 +7,15 @@ if (!isset($_SESSION['CustomerID'])) {
     header('Location: login.php');
     exit(); 
 }
-    $user_id = $_SESSION['CustomerID'];
+$user_id = $_SESSION['CustomerID'];
 
 $update_message = '';
+
+// Initialize user variables with default values
+$fname = '';
+$email = '';
+$phone = '';
+$address = '';
 
 // Handle form submission for updating user details
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
@@ -55,23 +61,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
     }
 }
 
-    $sql = "SELECT * FROM customer WHERE CustomerID= $user_id";
-    $result = mysqli_query($connection, $sql);
+$sql = "SELECT * FROM customer WHERE CustomerID= $user_id";
+$result = mysqli_query($connection, $sql);
 
-    if(!$result){
-        die('QUERY FAILED').mysqli_connect_error();
-    }
+if(!$result){
+    die('QUERY FAILED').mysqli_connect_error();
+}
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $fname = $row['Name'];
-        $email = $row['Email'];
-        $phone = $row['PhoneNumber'];
-        $address = $row['Address'];
-        
-    } else {
-        echo "User not found";
-    }
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $fname = $row['Name'];
+    $email = $row['Email'];
+    $phone = $row['PhoneNumber'];
+    $address = $row['Address'];
+    
+} else {
+    echo "User not found";
+}
 
 // Close database connection
 $connection->close();
