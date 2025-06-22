@@ -42,12 +42,12 @@ $connection->close();
     <head>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title> User Profile</title>
-    <link rel="stylesheet" href="/CSS/user_1.css">
+    <link rel="stylesheet" href="css/user_1.css">
     </head>
 
 <body>
 <?php include'header.php'?>
-<a href="#"><img class="image" src="/Images/driver.png" alt="user image" ></a>
+<a href="#"><img class="image" src="images/driver.png" alt="user image" ></a>
 
 <h3 class="h3">User Information</h3>
 <form>

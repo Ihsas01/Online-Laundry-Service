@@ -49,7 +49,7 @@ mysqli_close($connection);
 <title>Change Password </title>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"> <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Change Password</title>
-    <link rel="stylesheet" href="../css/changepw.css">
+    <link rel="stylesheet" href="css/changepw.css">
     
 </head>
 
@@ -63,10 +63,8 @@ mysqli_close($connection);
     </form>
 
     
-    <script src="../js/password_validate.js"></script>
+    <script src="js/password_validate.js"></script>
 </body>
 
-
-</html>
 
 </html>

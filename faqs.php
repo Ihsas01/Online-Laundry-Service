@@ -3,7 +3,7 @@
 
 <head>
 <title>FAQ </title>
-    <link rel="stylesheet" href="/css/faqs.css">
+    <link rel="stylesheet" href="css/faqs.css">
 </head>
 
 <body>

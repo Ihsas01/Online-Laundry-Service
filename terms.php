@@ -10,6 +10,8 @@
 </head>
 
 <body>
+    <?php include('header.php') ?>
+
     <!-- Animated Background -->
     <div class="background-animation">
         <div class="floating-shapes">
@@ -20,30 +22,6 @@
             <div class="shape shape-5"></div>
         </div>
     </div>
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.php" class="nav-logo">
-                <i class="fas fa-tshirt"></i>
-                <span>FreshWash</span>
-            </a>
-            <div class="nav-links">
-                <a href="index.php" class="nav-link">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </a>
-                <a href="service.php" class="nav-link">
-                    <i class="fas fa-concierge-bell"></i>
-                    <span>Services</span>
-                </a>
-                <a href="contact_us.php" class="nav-link">
-                    <i class="fas fa-envelope"></i>
-                    <span>Contact</span>
-                </a>
-            </div>
-        </div>
-    </nav>
 
     <!-- Main Content -->
     <main class="main-content">
@@ -424,29 +402,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>FreshWash</h4>
-                <p>Your trusted partner for premium laundry services.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <a href="index.php">Home</a>
-                <a href="service.php">Services</a>
-                <a href="contact_us.php">Contact</a>
-            </div>
-            <div class="footer-section">
-                <h4>Legal</h4>
-                <a href="terms.php">Terms & Conditions</a>
-                <a href="privacy_policy.php">Privacy Policy</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 FreshWash. All rights reserved.</p>
-        </div>
-    </footer>
+    <?php include('footer.php') ?>
 
     <!-- Back to Top Button -->
     <button class="back-to-top" id="backToTop">

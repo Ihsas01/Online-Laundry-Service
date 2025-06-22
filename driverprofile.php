@@ -40,7 +40,7 @@ $connection->close();
 <html>
 <head>
     <title>Driver Profile</title>
-    <link rel="stylesheet" href="../css/driverprofile.css">
+    <link rel="stylesheet" href="css/driverprofile.css">
 </head>
 <body>
     <?php include 'header.php' ?>

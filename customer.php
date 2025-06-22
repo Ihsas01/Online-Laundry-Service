@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="customer.js"></script>
+    <script src="js/customer.js"></script>
     
 </head>
 <body>
@@ -19,7 +19,7 @@
         <P>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit aut illum fugiat non volu</P>
 
         </div>
-        <div class="image"> <img src="/images/Support.png" alt="customer support image"></div>
+        <div class="image"> <img src="images/Support.png" alt="customer support image"></div>
     </div>
 
     <div>
