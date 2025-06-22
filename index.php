@@ -28,9 +28,9 @@
         <div class="hero-slider">
             <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/1.jpeg')">
                 <div class="slide-content" data-aos="fade-up">
-                    <h1>Professional Laundry Services</h1>
+                    <h1 class="gradient-text">Professional Laundry Services</h1>
                     <p>Experience premium care for your clothes with our expert cleaning services</p>
-                    <a href="order.php" class="cta-button">
+                    <a href="order.php" class="cta-button hover-effect">
                         <span>Start Your Order</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
@@ -39,9 +39,9 @@
             
             <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/2.jpeg')">
                 <div class="slide-content" data-aos="fade-up">
-                    <h1>Fast & Reliable Delivery</h1>
+                    <h1 class="gradient-text">Fast & Reliable Delivery</h1>
                     <p>We pick up, clean, and deliver your clothes right to your doorstep</p>
-                    <a href="service.php" class="cta-button">
+                    <a href="service.php" class="cta-button hover-effect">
                         <span>View Services</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
@@ -50,9 +50,9 @@
             
             <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/3.jpeg')">
                 <div class="slide-content" data-aos="fade-up">
-                    <h1>Eco-Friendly Cleaning</h1>
+                    <h1 class="gradient-text">Eco-Friendly Cleaning</h1>
                     <p>Environmentally conscious cleaning solutions for a better tomorrow</p>
-                    <a href="about_us.php" class="cta-button">
+                    <a href="about_us.php" class="cta-button hover-effect">
                         <span>Learn More</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
@@ -62,10 +62,10 @@
         
         <!-- Slider Navigation -->
         <div class="slider-nav">
-            <button class="nav-btn prev" onclick="changeSlide(-1)">
+            <button class="nav-btn prev hover-effect" onclick="changeSlide(-1)">
                 <i class="fas fa-chevron-left"></i>
             </button>
-            <button class="nav-btn next" onclick="changeSlide(1)">
+            <button class="nav-btn next hover-effect" onclick="changeSlide(1)">
                 <i class="fas fa-chevron-right"></i>
             </button>
         </div>
@@ -75,6 +75,14 @@
             <span class="dot active" onclick="currentSlide(1)"></span>
             <span class="dot" onclick="currentSlide(2)"></span>
             <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <span>Scroll to explore</span>
         </div>
     </section>
 
@@ -87,7 +95,7 @@
             </div>
             
             <div class="steps-grid">
-                <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-card hover-lift animate-child" data-aos="fade-up" data-aos-delay="100">
                     <div class="step-icon">
                         <i class="fas fa-user-plus"></i>
                     </div>
@@ -96,7 +104,7 @@
                     <p>Create your account and log in to access our services</p>
                 </div>
                 
-                <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="step-card hover-lift animate-child" data-aos="fade-up" data-aos-delay="200">
                     <div class="step-icon">
                         <i class="fas fa-list-check"></i>
                     </div>
@@ -105,7 +113,7 @@
                     <p>Select from our range of professional cleaning services</p>
                 </div>
                 
-                <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="step-card hover-lift animate-child" data-aos="fade-up" data-aos-delay="300">
                     <div class="step-icon">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
@@ -114,7 +122,7 @@
                     <p>Schedule pickup and specify your cleaning preferences</p>
                 </div>
                 
-                <div class="step-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="step-card hover-lift animate-child" data-aos="fade-up" data-aos-delay="400">
                     <div class="step-icon">
                         <i class="fas fa-truck"></i>
                     </div>
@@ -125,7 +133,7 @@
             </div>
             
             <div class="cta-section" data-aos="zoom-in">
-                <a href="order.php" class="primary-button">
+                <a href="order.php" class="primary-button hover-effect">
                     <span>Start Your Order Now</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
@@ -143,31 +151,31 @@
                     <p>At FreshWash, we understand that your clothes deserve the best care. With years of experience in the laundry industry, we provide professional cleaning services that ensure your garments look and feel their best.</p>
                     
                     <div class="features">
-                        <div class="feature">
+                        <div class="feature animate-child">
                             <i class="fas fa-check-circle"></i>
                             <span>Professional cleaning standards</span>
                         </div>
-                        <div class="feature">
+                        <div class="feature animate-child">
                             <i class="fas fa-check-circle"></i>
                             <span>Eco-friendly detergents</span>
                         </div>
-                        <div class="feature">
+                        <div class="feature animate-child">
                             <i class="fas fa-check-circle"></i>
                             <span>Fast turnaround time</span>
                         </div>
-                        <div class="feature">
+                        <div class="feature animate-child">
                             <i class="fas fa-check-circle"></i>
                             <span>Convenient pickup & delivery</span>
                         </div>
                     </div>
                     
-                    <a href="about_us.php" class="secondary-button">
+                    <a href="about_us.php" class="secondary-button hover-effect">
                         <span>Learn More About Us</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
                 
-                <div class="about-image" data-aos="fade-left">
+                <div class="about-image parallax" data-speed="0.3" data-aos="fade-left">
                     <img src="images/laundry-worker-istock-459292777.jpg" alt="Professional Laundry Service">
                 </div>
             </div>
@@ -183,7 +191,7 @@
             </div>
             
             <div class="services-grid">
-                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-card hover-lift animate-child" data-aos="fade-up" data-aos-delay="100">
                     <div class="service-image">
                         <img src="images/dryCloth.jpg" alt="Dry Cleaning">
                         <div class="service-overlay">
@@ -193,11 +201,11 @@
                     <div class="service-content">
                         <h3>Dry Cleaning</h3>
                         <p>Professional dry cleaning for delicate fabrics and formal wear</p>
-                        <a href="service.php" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                        <a href="service.php" class="service-link hover-effect">Learn More <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 
-                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card hover-lift animate-child" data-aos="fade-up" data-aos-delay="200">
                     <div class="service-image">
                         <img src="images/Fold.jpg" alt="Wash and Fold">
                         <div class="service-overlay">
@@ -207,11 +215,11 @@
                     <div class="service-content">
                         <h3>Wash & Fold</h3>
                         <p>Complete washing, drying, and folding service for everyday clothes</p>
-                        <a href="service.php" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                        <a href="service.php" class="service-link hover-effect">Learn More <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 
-                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-card hover-lift animate-child" data-aos="fade-up" data-aos-delay="300">
                     <div class="service-image">
                         <img src="images/iron.jpg" alt="Iron Only">
                         <div class="service-overlay">
@@ -221,11 +229,11 @@
                     <div class="service-content">
                         <h3>Iron Only</h3>
                         <p>Professional pressing and ironing for wrinkle-free garments</p>
-                        <a href="service.php" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                        <a href="service.php" class="service-link hover-effect">Learn More <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 
-                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="service-card hover-lift animate-child" data-aos="fade-up" data-aos-delay="400">
                     <div class="service-image">
                         <img src="images/washingMachine.jpg" alt="Wash Only">
                         <div class="service-overlay">
@@ -235,7 +243,7 @@
                     <div class="service-content">
                         <h3>Wash Only</h3>
                         <p>Professional washing service with premium detergents</p>
-                        <a href="service.php" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                        <a href="service.php" class="service-link hover-effect">Learn More <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -246,24 +254,102 @@
     <section class="stats-section" data-aos="fade-up">
         <div class="container">
             <div class="stats-grid">
-                <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+                <div class="stat-item hover-lift animate-child" data-aos="zoom-in" data-aos-delay="100">
                     <div class="stat-number" data-count="1000">0</div>
                     <div class="stat-label">Happy Customers</div>
                 </div>
                 
-                <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+                <div class="stat-item hover-lift animate-child" data-aos="zoom-in" data-aos-delay="200">
                     <div class="stat-number" data-count="5000">0</div>
                     <div class="stat-label">Orders Completed</div>
                 </div>
                 
-                <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+                <div class="stat-item hover-lift animate-child" data-aos="zoom-in" data-aos-delay="300">
                     <div class="stat-number" data-count="24">0</div>
                     <div class="stat-label">Hours Support</div>
                 </div>
                 
-                <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
+                <div class="stat-item hover-lift animate-child" data-aos="zoom-in" data-aos-delay="400">
                     <div class="stat-number" data-count="100">0</div>
                     <div class="stat-label">% Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section" data-aos="fade-up">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Customers Say</h2>
+                <p>Real feedback from satisfied customers</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card glass-card hover-lift animate-child" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Amazing service! My clothes have never looked better. Fast delivery and excellent quality."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="author-info">
+                                <h4>Sarah Johnson</h4>
+                                <span>Regular Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card glass-card hover-lift animate-child" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Professional, reliable, and eco-friendly. Exactly what I was looking for in a laundry service."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="author-info">
+                                <h4>Michael Chen</h4>
+                                <span>Business Owner</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card glass-card hover-lift animate-child" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-content">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"Convenient pickup and delivery. The app is easy to use and the service is top-notch!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="author-info">
+                                <h4>Emily Rodriguez</h4>
+                                <span>Working Professional</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -276,11 +362,11 @@
                 <h2>Ready to Experience Premium Laundry Services?</h2>
                 <p>Join thousands of satisfied customers who trust us with their laundry needs</p>
                 <div class="cta-buttons">
-                    <a href="order.php" class="primary-button">
+                    <a href="order.php" class="primary-button hover-effect">
                         <span>Start Your Order</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
-                    <a href="contact_us.php" class="secondary-button">
+                    <a href="contact_us.php" class="secondary-button hover-effect">
                         <span>Contact Us</span>
                         <i class="fas fa-phone"></i>
                     </a>
@@ -288,6 +374,24 @@
             </div>
         </div>
     </section>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <button class="fab-main hover-effect" onclick="scrollToTop()">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <div class="fab-options">
+            <button class="fab-option hover-effect" onclick="window.location.href='order.php'" title="Place Order">
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+            <button class="fab-option hover-effect" onclick="window.location.href='contact_us.php'" title="Contact Us">
+                <i class="fas fa-phone"></i>
+            </button>
+            <button class="fab-option hover-effect" onclick="window.location.href='faqs.php'" title="FAQs">
+                <i class="fas fa-question"></i>
+            </button>
+        </div>
+    </div>
 
     <?php include('footer.php') ?>
     
@@ -302,39 +406,38 @@
             once: true
         });
         
-        // Animate stats numbers
-        function animateStats() {
-            const stats = document.querySelectorAll('.stat-number');
-            stats.forEach(stat => {
-                const target = parseInt(stat.getAttribute('data-count'));
-                const increment = target / 100;
-                let current = 0;
-                
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        current = target;
-                        clearInterval(timer);
-                    }
-                    stat.textContent = Math.floor(current);
-                }, 20);
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         }
         
-        // Trigger stats animation when in view
-        const statsSection = document.querySelector('.stats-section');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateStats();
-                    observer.unobserve(entry.target);
-                }
-            });
+        // Show/hide floating action button
+        window.addEventListener('scroll', () => {
+            const fab = document.querySelector('.fab-container');
+            if (window.scrollY > 300) {
+                fab.classList.add('visible');
+            } else {
+                fab.classList.remove('visible');
+            }
         });
         
-        if (statsSection) {
-            observer.observe(statsSection);
+        // Enhanced scroll indicator
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        if (scrollIndicator) {
+            scrollIndicator.addEventListener('click', () => {
+                document.querySelector('.how-it-works').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         }
+        
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
     </script>
   </body>
 </html>
