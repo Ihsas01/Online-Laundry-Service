@@ -293,7 +293,7 @@ copies or substantial portions of the Software.
 **Ihsas** - *Full Stack Developer*
 
 - **Email**: [mohamedihsas001@gmail.com](mailto:mohamedihsas001@gmail.com)
-- **GitHub**: [@ihsas](https://github.com/ihsas)
+- **GitHub**: [@ihsas](https://github.com/Ihsas01)
 - **LinkedIn**: [Ihsas](https://linkedin.com/in/ihsas)
 
 ### 🙏 Acknowledgments
