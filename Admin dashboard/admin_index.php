@@ -1,124 +1,400 @@
 <?php 
- include '../db_connect.php'
+include '../db_connect.php';
+
+// Fetch statistics for dashboard
+$stats = array();
+
+// Total customers
+$stats['customers'] = 0;
+$query = "SELECT COUNT(*) as total FROM customer";
+$result = mysqli_query($connection, $query);
+if ($result) {
+    $stats['customers'] = mysqli_fetch_assoc($result)['total'];
+}
+
+// Total orders (check if table exists first)
+$stats['orders'] = 0;
+$query = "SHOW TABLES LIKE 'orders'";
+$result = mysqli_query($connection, $query);
+if (mysqli_num_rows($result) > 0) {
+    $query = "SELECT COUNT(*) as total FROM orders";
+    $result = mysqli_query($connection, $query);
+    if ($result) {
+        $stats['orders'] = mysqli_fetch_assoc($result)['total'];
+    }
+}
+
+// Recent orders (with error handling)
+$recent_orders = null;
+$query = "SHOW TABLES LIKE 'orders'";
+$result = mysqli_query($connection, $query);
+if (mysqli_num_rows($result) > 0) {
+    $query = "SELECT o.*, c.Name as CustomerName FROM orders o 
+              LEFT JOIN customer c ON o.CustomerID = c.CustomerID 
+              ORDER BY o.OrderDate DESC LIMIT 5";
+    $recent_orders = mysqli_query($connection, $query);
+    if (!$recent_orders) {
+        $recent_orders = null;
+    }
+}
+
+// Customer data for table
+$query = "SELECT * FROM customer ORDER BY CustomerID DESC LIMIT 10";
+$customers = mysqli_query($connection, $query);
+if (!$customers) {
+    $customers = null;
+}
 ?>
 
-
-
-
-
-
-
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Title</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="../css/styles.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Laundry Service</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-  </head>
-  <body>
-      <section id="menu">
-        <div class="logo">
-            <img src="logo4.png" alt="">
-            <h2>Laundry</h2>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/admin_dashboard_modern.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src="logo4.png" alt="Laundry Logo">
+                <h2>Laundry Admin</h2>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class='bx bx-menu'></i>
+            </button>
         </div>
 
-        <div class="items">
-            <li><i class='bx bxs-pie-chart-alt-2'></i><a href="">Dashboard</a></li>
-            <li><i class='bx bxs-comment' ></i><a href="">Feedback</a></li> 
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="admin_index.php" class="menu-item"><i class='bx bxs-dashboard'></i><span>Dashboard</span></a></li>
+                <li><a href="manage_users.php" class="menu-item"><i class='bx bxs-user-detail'></i><span>Users</span></a></li>
+                <li><a href="manage_orders.php" class="menu-item"><i class='bx bxs-shopping-bag'></i><span>Orders</span></a></li>
+                <li><a href="manage_delivery.php" class="menu-item"><i class='bx bxs-truck'></i><span>Delivery</span></a></li>
+                <li><a href="manage_feedback.php" class="menu-item"><i class='bx bxs-comment-dots'></i><span>Feedback</span></a></li>
+                <li><a href="settings.php" class="menu-item"><i class='bx bxs-cog'></i><span>Settings</span></a></li>
+            </ul>
         </div>
-      </section>
-      <section class="interface">
-        <div class="navigate">
-            <div class="n1">
-                <div class="search">
-                <i class='bx bx-search-alt' ></i>
-                <input type="text" placeholder="search" name="" id="">
+
+        <div class="sidebar-footer">
+            <div class="admin-profile">
+                <img src="../images/user.png" alt="Admin">
+                <div>
+                    <h4>Admin User</h4>
+                    <p>Administrator</p>
                 </div>
             </div>
-        
-            <div class="profile">
-                <i class='bx bxs-bell'></i>
-                <i class='bx bxs-user-circle' ></i>
-             </div>
         </div>
-        <h3 class="i-name">Dashboard</h3>
-        <div class="values">
-          <div class="val-box">
-            <i class='bx bxs-user'></i>
-            <div>
-              <h3>8000</h3>
-              <span>New Users</span>
-            </div>
-          </div>
-          <div class="val-box">
-            <i class='bx bxs-user'></i>
-            <div>
-              <h3>8000</h3>
-              <span>New Users</span>
-            </div>
-          </div>
-          <div class="val-box">
-            <i class='bx bxs-user'></i>
-            <div>
-              <h3>8000</h3>
-              <span>New Users</span>
-            </div>
-          </div>
-          <div class="val-box">
-            <i class='bx bxs-user'></i>
-            <div>
-              <h3>8000</h3>
-              <span>New Users</span>
-            </div>
-          </div>
-        </div>
-        <div class="board">
-          <table width="100%">
-            <thead>
-                <tr>
-                  <td>Customer ID</td>
-                  <td>Name</td>
-                  <td>UserName</td>
-                  <td>Phone NUmber</td>
-                  <td>E-mail</td>
-                  <td>Address</td>
-                </tr>
-            </thead>
-            <tbody>
-                    <?php
-                    $query = "SELECT * FROM customer";
-                    $result = mysqli_query($connection, $query);
+    </nav>
 
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <h1 class="page-title">Dashboard</h1>
+                <p class="page-subtitle">Welcome back! Here's what's happening today.</p>
+            </div>
+            
+            <div class="nav-right">
+                <div class="search-container">
+                    <i class='bx bx-search'></i>
+                    <input type="text" placeholder="Search..." class="search-input">
+                </div>
+                
+                <div class="nav-actions">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class='bx bx-bell'></i>
+                        <span class="notification-badge">3</span>
+                    </button>
                     
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr>";
-                        echo "<td>{$row['CustomerID']}</td>";
-                        echo "<td>{$row['Name']}</td>";
-                        echo "<td>{$row['UserName']}</td>";
-                        echo "<td>{$row['PhoneNumber']}</td>";
-                        echo "<td>{$row['Email']}</td>";
-                        echo "<td>{$row['Address']}</td>";
-                        echo "</tr>";
-                    }
+                    <div class="user-menu">
+                        <button class="user-btn" id="userMenuBtn">
+                            <img src="../images/user.png" alt="User">
+                            <span>Admin</span>
+                            <i class='bx bx-chevron-down'></i>
+                        </button>
+                        <div class="user-dropdown" id="userDropdown">
+                            <a href="#"><i class='bx bx-user'></i> Profile</a>
+                            <a href="#"><i class='bx bx-cog'></i> Settings</a>
+                            <a href="../logout.php"><i class='bx bx-log-out'></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-                    // Close database connection
-                    mysqli_close($connection);
-                    ?>
-                </tbody>
-          </table>
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-icon customers">
+                        <i class='bx bxs-user'></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number" data-target="<?php echo $stats['customers']; ?>">0</h3>
+                        <p class="stat-label">Total Customers</p>
+                        <span class="stat-change positive">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            12% from last month
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-icon orders">
+                        <i class='bx bxs-shopping-bag'></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number" data-target="<?php echo $stats['orders']; ?>">0</h3>
+                        <p class="stat-label">Total Orders</p>
+                        <span class="stat-change positive">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            8% from last month
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-icon revenue">
+                        <i class='bx bxs-dollar-circle'></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number" data-target="15420">0</h3>
+                        <p class="stat-label">Revenue</p>
+                        <span class="stat-change positive">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            15% from last month
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-icon pending">
+                        <i class='bx bxs-time'></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number" data-target="23">0</h3>
+                        <p class="stat-label">Pending Orders</p>
+                        <span class="stat-change negative">
+                            <i class='bx bx-down-arrow-alt'></i>
+                            3% from last month
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Tables Section -->
+            <div class="dashboard-grid">
+                <!-- Chart Section -->
+                <div class="chart-section" data-aos="fade-up" data-aos-delay="500">
+                    <div class="section-header">
+                        <h3>Revenue Overview</h3>
+                        <div class="chart-controls">
+                            <button class="chart-btn active" data-period="week">Week</button>
+                            <button class="chart-btn" data-period="month">Month</button>
+                            <button class="chart-btn" data-period="year">Year</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="recent-orders" data-aos="fade-up" data-aos-delay="600">
+                    <div class="section-header">
+                        <h3>Recent Orders</h3>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="orders-list">
+                        <?php if ($recent_orders && mysqli_num_rows($recent_orders) > 0): ?>
+                            <?php while($order = mysqli_fetch_assoc($recent_orders)): ?>
+                            <div class="order-item">
+                                <div class="order-info">
+                                    <h4>Order #<?php echo $order['OrderID']; ?></h4>
+                                    <p><?php echo $order['CustomerName'] ?: 'Unknown Customer'; ?></p>
+                                </div>
+                                <div class="order-status">
+                                    <span class="status-badge <?php echo strtolower($order['Status']); ?>">
+                                        <?php echo ucfirst($order['Status']); ?>
+                                    </span>
+                                </div>
+                                <div class="order-amount">
+                                    $<?php echo number_format($order['TotalAmount'], 2); ?>
+                                </div>
+                            </div>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <div class="no-data">
+                                <i class='bx bx-package'></i>
+                                <p>No recent orders</p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customers Table -->
+            <div class="table-section" data-aos="fade-up" data-aos-delay="700">
+                <div class="section-header">
+                    <h3>Recent Customers</h3>
+                    <div class="table-actions">
+                        <button class="btn-secondary" id="exportBtn">
+                            <i class='bx bx-download'></i>
+                            Export
+                        </button>
+                        <button class="btn-primary" id="addCustomerBtn">
+                            <i class='bx bx-plus'></i>
+                            Add Customer
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($customers): ?>
+                                <?php while ($customer = mysqli_fetch_assoc($customers)): ?>
+                                <tr>
+                                    <td>#<?php echo $customer['CustomerID']; ?></td>
+                                    <td>
+                                        <div class="customer-info">
+                                            <img src="../images/user.png" alt="Customer">
+                                            <span><?php echo $customer['Name']; ?></span>
+                                        </div>
+                                    </td>
+                                    <td><?php echo $customer['UserName']; ?></td>
+                                    <td><?php echo $customer['PhoneNumber']; ?></td>
+                                    <td><?php echo $customer['Email']; ?></td>
+                                    <td><?php echo substr($customer['Address'], 0, 30) . '...'; ?></td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn edit" title="Edit">
+                                                <i class='bx bx-edit-alt'></i>
+                                            </button>
+                                            <button class="action-btn view" title="View">
+                                                <i class='bx bx-show'></i>
+                                            </button>
+                                            <button class="action-btn delete" title="Delete">
+                                                <i class='bx bx-trash'></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="7">No customers found</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+    </main>
 
+    <!-- Add Customer Modal -->
+    <div class="modal" id="addCustomerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Customer</h3>
+                <button class="modal-close" id="closeModal">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea name="address" rows="3" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelAdd">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Customer</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
+    <!-- Notification Panel -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button class="notification-close" id="closeNotifications">
+                <i class='bx bx-x'></i>
+            </button>
+        </div>
+        <div class="notification-list">
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <i class='bx bx-shopping-bag'></i>
+                </div>
+                <div class="notification-content">
+                    <h4>New Order Received</h4>
+                    <p>Order #1234 has been placed by John Doe</p>
+                    <span class="notification-time">2 minutes ago</span>
+                </div>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <i class='bx bx-user-plus'></i>
+                </div>
+                <div class="notification-content">
+                    <h4>New Customer Registration</h4>
+                    <p>Jane Smith has registered for an account</p>
+                    <span class="notification-time">15 minutes ago</span>
+                </div>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <i class='bx bx-message-rounded'></i>
+                </div>
+                <div class="notification-content">
+                    <h4>New Feedback</h4>
+                    <p>You have received new customer feedback</p>
+                    <span class="notification-time">1 hour ago</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
 
-
-
-      </section>
-      
-  </body>
+    <script src="../js/admin_dashboard.js"></script>
+</body>
 </html>

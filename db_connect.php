@@ -2,7 +2,7 @@
 $userName = 'root';
 $serverName = 'localhost';
 $password = '';
-$dBName = 'online_laundry';
+$dBName = 'OnlineLaundry';
 
 $connection = mysqli_connect($serverName,$userName , $password, $dBName);
 
