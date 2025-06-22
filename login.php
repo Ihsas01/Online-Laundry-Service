@@ -30,8 +30,8 @@ if(isset($_POST['login'])) {
             if ($result && $result->num_rows > 0) {
                 $user = $result->fetch_assoc();
                 
-                // Verify the password using password_verify()
-                if (password_verify($password, $user['password'])) {
+                // Direct password comparison
+                if ($password === $user['password']) {
                     $_SESSION['CustomerID'] = $user['CustomerID'];
                     $_SESSION['UserName'] = $user['UserName'];
                     
@@ -220,11 +220,11 @@ if(isset($_POST['login'])) {
                                     <div class="input-icon-container">
                                         <i class="fas fa-user input-icon"></i>
                                     </div>
-                                    <input type="text" id="username" name="username" required autocomplete="username">
+                                    <input type="text" id="username" name="username" required autocomplete="username" placeholder=" ">
                                     <div class="input-focus-border"></div>
                                     <div class="input-glow"></div>
+                                    <label for="username" class="floating-label">Username</label>
                                 </div>
-                                <label for="username" class="floating-label">Username</label>
                                 <div class="input-hint">Enter your registered username</div>
                             </div>
                             
@@ -233,14 +233,14 @@ if(isset($_POST['login'])) {
                                     <div class="input-icon-container">
                                         <i class="fas fa-lock input-icon"></i>
                                     </div>
-                                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                                    <input type="password" id="password" name="password" required autocomplete="current-password" placeholder=" ">
                                     <button type="button" class="password-toggle" onclick="togglePassword()">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                     <div class="input-focus-border"></div>
                                     <div class="input-glow"></div>
+                                    <label for="password" class="floating-label">Password</label>
                                 </div>
-                                <label for="password" class="floating-label">Password</label>
                                 <div class="input-hint">Enter your password</div>
                             </div>
                             

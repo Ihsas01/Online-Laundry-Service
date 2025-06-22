@@ -21,9 +21,8 @@ if (!$result) {
 $row = mysqli_fetch_assoc($result);
 $db_password = $row['password'];
 
-if (password_verify($old_password, $db_password)) {
-    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-    $update_query = "UPDATE users SET password = '$hashed_password' WHERE user_id = $user_id";
+if ($old_password === $db_password) {
+    $update_query = "UPDATE users SET password = '$new_password' WHERE user_id = $user_id";
     $update_result = mysqli_query($connection, $update_query);
 
     if (!$update_result) {

@@ -152,11 +152,11 @@ if(isset($_POST['login'])) {
                                     <div class="input-icon-container">
                                         <i class="fas fa-user input-icon"></i>
                                     </div>
-                                    <input type="text" id="username" name="username" required autocomplete="username">
+                                    <input type="text" id="username" name="username" required autocomplete="username" placeholder=" ">
                                     <div class="input-focus-border"></div>
                                     <div class="input-glow"></div>
+                                    <label for="username" class="floating-label">Username</label>
                                 </div>
-                                <label for="username" class="floating-label">Username</label>
                                 <div class="input-hint">Enter your admin username</div>
                             </div>
                             
@@ -165,14 +165,14 @@ if(isset($_POST['login'])) {
                                     <div class="input-icon-container">
                                         <i class="fas fa-lock input-icon"></i>
                                     </div>
-                                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                                    <input type="password" id="password" name="password" required autocomplete="current-password" placeholder=" ">
                                     <button type="button" class="password-toggle" onclick="togglePassword('password')">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                     <div class="input-focus-border"></div>
                                     <div class="input-glow"></div>
+                                    <label for="password" class="floating-label">Password</label>
                                 </div>
-                                <label for="password" class="floating-label">Password</label>
                                 <div class="input-hint">Enter your admin password</div>
                             </div>
                             

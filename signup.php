@@ -33,10 +33,9 @@ if (isset($_POST['signup'])) {
             if ($result->num_rows > 0) {
                 $error_message = "Username already exists!";
             } else {
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                 $sql = "INSERT INTO customer (Name, UserName, password, PhoneNumber, email, Address) VALUES (?, ?, ?, ?, ?, ?)";
                 $stmt = $connection->prepare($sql);
-                $stmt->bind_param("ssssss", $firstName, $userName, $hashedPassword, $phoneNum, $email, $address);
+                $stmt->bind_param("ssssss", $firstName, $userName, $password, $phoneNum, $email, $address);
                 
                 if ($stmt->execute()) {
                     $success_message = "Account created successfully! You can now login.";
@@ -171,194 +170,174 @@ $connection->close();
                             <h2>Create Account</h2>
                             <p>Fill in your details to get started</p>
                         </div>
+
+                        <?php if (isset($error_message)): ?>
+                            <div class="error-message">
+                                <div class="error-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="error-content">
+                                    <span class="error-title">Error</span>
+                                    <span class="error-text"><?php echo $error_message; ?></span>
+                                </div>
+                                <button class="error-close" onclick="this.parentElement.remove()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (isset($success_message)): ?>
+                            <div class="success-message">
+                                <div class="success-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="success-content">
+                                    <span class="success-title">Success</span>
+                                    <span class="success-text"><?php echo $success_message; ?></span>
+                                </div>
+                                <button class="error-close" onclick="this.parentElement.remove()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        <?php endif; ?>
                         
                         <form method="post" action="signup.php" class="signup-form" id="signupForm">
-                            <?php if(isset($error_message)): ?>
-                                <div class="error-message" id="errorMessage">
-                                    <div class="error-icon">
-                                        <i class="fas fa-exclamation-triangle"></i>
+                            <!-- Account Information -->
+                            <div class="form-section">
+                                <h3 class="section-title">Account Information</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <div class="input-wrapper">
+                                            <input type="text" id="firstName" name="firstName" required autocomplete="given-name" placeholder=" ">
+                                            <label for="firstName" class="floating-label">Full Name</label>
+                                            <div class="input-focus-border"></div>
+                                            <div class="input-glow"></div>
+                                        </div>
                                     </div>
-                                    <div class="error-content">
-                                        <span class="error-title">Registration Failed</span>
-                                        <span class="error-text"><?php echo $error_message; ?></span>
+                                    <div class="form-group">
+                                        <div class="input-wrapper">
+                                            <input type="text" id="userName" name="userName" required autocomplete="username" placeholder=" ">
+                                            <label for="userName" class="floating-label">Username</label>
+                                            <div class="input-focus-border"></div>
+                                            <div class="input-glow"></div>
+                                        </div>
                                     </div>
-                                    <button type="button" class="error-close" onclick="closeError()">
-                                        <i class="fas fa-times"></i>
-                                    </button>
                                 </div>
-                            <?php endif; ?>
-                            
-                            <?php if(isset($success_message)): ?>
-                                <div class="success-message" id="successMessage">
-                                    <div class="success-icon">
-                                        <i class="fas fa-check-circle"></i>
-                                    </div>
-                                    <div class="success-content">
-                                        <span class="success-title">Success!</span>
-                                        <span class="success-text"><?php echo $success_message; ?></span>
-                                    </div>
-                                    <button type="button" class="success-close" onclick="closeSuccess()">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            <?php endif; ?>
-                            
-                            <div class="form-row">
                                 <div class="form-group">
                                     <div class="input-wrapper">
-                                        <div class="input-icon-container">
-                                            <i class="fas fa-user input-icon"></i>
-                                        </div>
-                                        <input type="text" id="firstName" name="firstName" required autocomplete="given-name">
+                                        <input type="email" id="email" name="email" required autocomplete="email" placeholder=" ">
+                                        <label for="email" class="floating-label">Email Address</label>
                                         <div class="input-focus-border"></div>
                                         <div class="input-glow"></div>
                                     </div>
-                                    <label for="firstName" class="floating-label">Full Name</label>
-                                    <div class="input-hint">Enter your full name</div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <div class="input-wrapper">
-                                        <div class="input-icon-container">
-                                            <i class="fas fa-at input-icon"></i>
-                                        </div>
-                                        <input type="text" id="userName" name="userName" required autocomplete="username">
-                                        <div class="input-focus-border"></div>
-                                        <div class="input-glow"></div>
-                                    </div>
-                                    <label for="userName" class="floating-label">Username</label>
-                                    <div class="input-hint">Choose a unique username</div>
                                 </div>
                             </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <div class="input-wrapper">
-                                        <div class="input-icon-container">
-                                            <i class="fas fa-phone input-icon"></i>
+
+                            <!-- Contact Information -->
+                            <div class="form-section">
+                                <h3 class="section-title">Contact Information</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <div class="input-wrapper">
+                                            <input type="tel" id="phoneNum" name="phoneNum" required autocomplete="tel" placeholder=" ">
+                                            <label for="phoneNum" class="floating-label">Phone Number</label>
+                                            <div class="input-focus-border"></div>
+                                            <div class="input-glow"></div>
                                         </div>
-                                        <input type="tel" id="phoneNum" name="phoneNum" required autocomplete="tel">
-                                        <div class="input-focus-border"></div>
-                                        <div class="input-glow"></div>
                                     </div>
-                                    <label for="phoneNum" class="floating-label">Phone Number</label>
-                                    <div class="input-hint">Enter your phone number</div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <div class="input-wrapper">
-                                        <div class="input-icon-container">
-                                            <i class="fas fa-envelope input-icon"></i>
+                                    <div class="form-group">
+                                        <div class="input-wrapper">
+                                            <input type="text" id="address" name="add" required autocomplete="street-address" placeholder=" ">
+                                            <label for="address" class="floating-label">Full Address</label>
+                                            <div class="input-focus-border"></div>
+                                            <div class="input-glow"></div>
                                         </div>
-                                        <input type="email" id="email" name="email" required autocomplete="email">
-                                        <div class="input-focus-border"></div>
-                                        <div class="input-glow"></div>
                                     </div>
-                                    <label for="email" class="floating-label">Email Address</label>
-                                    <div class="input-hint">Enter your email address</div>
                                 </div>
                             </div>
-                            
-                            <div class="form-group">
-                                <div class="input-wrapper">
-                                    <div class="input-icon-container">
-                                        <i class="fas fa-map-marker-alt input-icon"></i>
-                                    </div>
-                                    <input type="text" id="address" name="add" required autocomplete="street-address">
-                                    <div class="input-focus-border"></div>
-                                    <div class="input-glow"></div>
-                                </div>
-                                <label for="address" class="floating-label">Full Address</label>
-                                <div class="input-hint">Enter your complete address</div>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <div class="input-wrapper">
-                                        <div class="input-icon-container">
-                                            <i class="fas fa-lock input-icon"></i>
+
+                            <!-- Security Information -->
+                            <div class="form-section">
+                                <h3 class="section-title">Security Information</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <div class="input-wrapper">
+                                            <input type="password" id="password" name="password" required autocomplete="new-password" placeholder=" ">
+                                            <label for="password" class="floating-label">Password</label>
+                                            <div class="input-focus-border"></div>
+                                            <div class="input-glow"></div>
+                                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
                                         </div>
-                                        <input type="password" id="password" name="password" required autocomplete="new-password">
-                                        <button type="button" class="password-toggle" onclick="togglePassword('password')">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <div class="input-focus-border"></div>
-                                        <div class="input-glow"></div>
+                                        <div class="password-strength" id="passwordStrength"></div>
                                     </div>
-                                    <label for="password" class="floating-label">Password</label>
-                                    <div class="password-strength" id="passwordStrength"></div>
-                                    <div class="input-hint">Create a strong password</div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <div class="input-wrapper">
-                                        <div class="input-icon-container">
-                                            <i class="fas fa-lock input-icon"></i>
+                                    <div class="form-group">
+                                        <div class="input-wrapper">
+                                            <input type="password" id="confirmPassword" name="confirmPassword" required autocomplete="new-password" placeholder=" ">
+                                            <label for="confirmPassword" class="floating-label">Confirm Password</label>
+                                            <div class="input-focus-border"></div>
+                                            <div class="input-glow"></div>
+                                            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
                                         </div>
-                                        <input type="password" id="confirmPassword" name="confirmPassword" required autocomplete="new-password">
-                                        <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <div class="input-focus-border"></div>
-                                        <div class="input-glow"></div>
                                     </div>
-                                    <label for="confirmPassword" class="floating-label">Confirm Password</label>
-                                    <div class="input-hint">Confirm your password</div>
                                 </div>
                             </div>
-                            
-                            <div class="form-options">
-                                <label class="checkbox-container">
-                                    <input type="checkbox" name="terms" id="terms" required>
-                                    <span class="checkmark"></span>
-                                    <span class="checkbox-text">
-                                        I agree to the <a href="terms.php" target="_blank">Terms & Conditions</a> and <a href="privacy_policy.php" target="_blank">Privacy Policy</a>
-                                    </span>
-                                </label>
-                                <label class="checkbox-container">
-                                    <input type="checkbox" name="newsletter" id="newsletter">
-                                    <span class="checkmark"></span>
-                                    <span class="checkbox-text">Subscribe to our newsletter for updates and offers</span>
-                                </label>
+
+                            <!-- Terms and Conditions -->
+                            <div class="form-section">
+                                <div class="form-options">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" name="terms" id="terms" required>
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">I agree to the <a href="terms.php" target="_blank">Terms & Conditions</a> and <a href="privacy_policy.php" target="_blank">Privacy Policy</a></span>
+                                    </label>
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" name="newsletter" id="newsletter">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Subscribe to our newsletter</span>
+                                    </label>
+                                </div>
                             </div>
-                            
-                            <button type="submit" class="signup-btn" name="signup" id="signupBtn">
-                                <div class="btn-content">
-                                    <span class="btn-text">Create Account</span>
-                                    <span class="btn-icon">
-                                        <i class="fas fa-arrow-right"></i>
-                                    </span>
-                                </div>
-                                <div class="btn-loading">
-                                    <div class="spinner"></div>
-                                    <span>Creating account...</span>
-                                </div>
-                                <div class="btn-success">
-                                    <i class="fas fa-check"></i>
-                                    <span>Success!</span>
-                                </div>
-                            </button>
-                            
+
+                            <!-- Submit Button -->
+                            <div class="form-section">
+                                <button type="submit" class="signup-btn" name="signup">
+                                    <div class="btn-content">
+                                        <span class="btn-text">Create Account</span>
+                                        <i class="fas fa-arrow-right btn-icon"></i>
+                                    </div>
+                                    <div class="btn-loading">
+                                        <div class="spinner"></div>
+                                        <span>Creating Account...</span>
+                                    </div>
+                                    <div class="btn-success">
+                                        <i class="fas fa-check"></i>
+                                        <span>Account Created!</span>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <!-- Social Signup -->
                             <div class="social-signup">
                                 <div class="divider">
-                                    <span>Or sign up with</span>
+                                    <span>or sign up with</span>
                                 </div>
                                 <div class="social-buttons">
                                     <button type="button" class="social-btn google-btn" onclick="handleSocialSignup('google')">
-                                        <div class="social-icon">
-                                            <i class="fab fa-google"></i>
-                                        </div>
+                                        <i class="fab fa-google social-icon"></i>
                                         <span>Google</span>
                                     </button>
                                     <button type="button" class="social-btn facebook-btn" onclick="handleSocialSignup('facebook')">
-                                        <div class="social-icon">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </div>
+                                        <i class="fab fa-facebook-f social-icon"></i>
                                         <span>Facebook</span>
                                     </button>
                                 </div>
                             </div>
-                            
+
+                            <!-- Form Footer -->
                             <div class="form-footer">
                                 <p>Already have an account? <a href="login.php" class="login-link">Sign In</a></p>
                             </div>

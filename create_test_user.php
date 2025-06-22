@@ -12,9 +12,6 @@ if ($connection) {
     $testPhone = "1234567890";
     $testAddress = "123 Test Street, Test City";
     
-    // Hash the password
-    $hashedPassword = password_hash($testPassword, PASSWORD_DEFAULT);
-    
     // Check if user already exists
     $checkSql = "SELECT CustomerID FROM customer WHERE UserName = ? OR Email = ?";
     $checkStmt = $connection->prepare($checkSql);
@@ -31,7 +28,7 @@ if ($connection) {
         // Insert test user
         $insertSql = "INSERT INTO customer (Name, UserName, password, PhoneNumber, Email, Address, Status) VALUES (?, ?, ?, ?, ?, ?, 'active')";
         $insertStmt = $connection->prepare($insertSql);
-        $insertStmt->bind_param("ssssss", $testName, $testUsername, $hashedPassword, $testPhone, $testEmail, $testAddress);
+        $insertStmt->bind_param("ssssss", $testName, $testUsername, $testPassword, $testPhone, $testEmail, $testAddress);
         
         if ($insertStmt->execute()) {
             echo "<p style='color: green;'>✓ Test user created successfully!</p>";

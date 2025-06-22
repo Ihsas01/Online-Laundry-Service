@@ -198,36 +198,30 @@ function initPasswordToggle() {
     passwordFields.forEach(field => {
         const toggleBtn = field.parentElement.querySelector('.password-toggle');
         if (toggleBtn) {
-            toggleBtn.addEventListener('click', () => togglePassword(field.id));
-            toggleBtn.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    togglePassword(field.id);
-                }
+            toggleBtn.addEventListener('click', function() {
+                const fieldId = field.id;
+                togglePassword(fieldId);
             });
         }
     });
 }
 
 function togglePassword(fieldId) {
-    const passwordField = document.getElementById(fieldId);
-    const toggleBtn = passwordField.parentElement.querySelector('.password-toggle');
+    const field = document.getElementById(fieldId);
+    const toggleBtn = field.parentElement.querySelector('.password-toggle');
     const icon = toggleBtn.querySelector('i');
     
-    if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        icon.className = 'fas fa-eye-slash';
+    if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
         toggleBtn.setAttribute('aria-label', 'Hide password');
-        toggleBtn.classList.add('active');
     } else {
-        passwordField.type = 'password';
-        icon.className = 'fas fa-eye';
+        field.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
         toggleBtn.setAttribute('aria-label', 'Show password');
-        toggleBtn.classList.remove('active');
     }
-    
-    // Add ripple effect
-    addRippleEffect(toggleBtn);
 }
 
 // Enhanced Floating Labels
@@ -235,44 +229,38 @@ function initFloatingLabels() {
     const inputs = document.querySelectorAll('.form-group input');
     
     inputs.forEach(input => {
-        // Check if input has value on page load
-        if (input.value.trim()) {
-            input.classList.add('has-value');
-        }
-        
         input.addEventListener('focus', handleInputFocus);
         input.addEventListener('blur', handleInputBlur);
         input.addEventListener('input', handleInputChange);
+        
+        // Initialize state
+        if (input.value.trim()) {
+            input.parentElement.classList.add('focused');
+        }
     });
 }
 
 function handleInputFocus(e) {
-    const input = e.target;
-    const wrapper = input.closest('.input-wrapper');
+    const wrapper = e.target.closest('.input-wrapper');
     wrapper.classList.add('focused');
     
-    // Add focus animation
-    wrapper.style.transform = 'scale(1.02)';
-    setTimeout(() => {
-        wrapper.style.transform = 'scale(1)';
-    }, 200);
+    // Add ripple effect
+    addRippleEffect(wrapper);
 }
 
 function handleInputBlur(e) {
-    const input = e.target;
-    const wrapper = input.closest('.input-wrapper');
-    
-    if (!input.value.trim()) {
+    const wrapper = e.target.closest('.input-wrapper');
+    if (!e.target.value.trim()) {
         wrapper.classList.remove('focused');
     }
 }
 
 function handleInputChange(e) {
-    const input = e.target;
-    if (input.value.trim()) {
-        input.classList.add('has-value');
+    const wrapper = e.target.closest('.input-wrapper');
+    if (e.target.value.trim()) {
+        wrapper.classList.add('focused');
     } else {
-        input.classList.remove('has-value');
+        wrapper.classList.remove('focused');
     }
 }
 
@@ -283,8 +271,7 @@ function initPasswordStrength() {
     
     if (passwordField && strengthIndicator) {
         passwordField.addEventListener('input', function() {
-            const password = this.value;
-            const strength = calculatePasswordStrength(password);
+            const strength = calculatePasswordStrength(this.value);
             updatePasswordStrengthIndicator(strengthIndicator, strength);
         });
     }
@@ -293,125 +280,99 @@ function initPasswordStrength() {
 function calculatePasswordStrength(password) {
     let score = 0;
     
-    // Length check
     if (password.length >= 8) score += 1;
-    if (password.length >= 12) score += 1;
+    if (password.match(/[a-z]/)) score += 1;
+    if (password.match(/[A-Z]/)) score += 1;
+    if (password.match(/[0-9]/)) score += 1;
+    if (password.match(/[^a-zA-Z0-9]/)) score += 1;
     
-    // Character variety checks
-    if (/[a-z]/.test(password)) score += 1;
-    if (/[A-Z]/.test(password)) score += 1;
-    if (/[0-9]/.test(password)) score += 1;
-    if (/[^A-Za-z0-9]/.test(password)) score += 1;
-    
-    // Determine strength level
-    if (score < 3) return 'weak';
-    if (score < 5) return 'fair';
-    if (score < 6) return 'good';
+    if (score < 2) return 'weak';
+    if (score < 3) return 'fair';
+    if (score < 4) return 'good';
     return 'strong';
 }
 
 function updatePasswordStrengthIndicator(indicator, strength) {
-    // Remove existing classes
-    indicator.className = 'password-strength';
+    indicator.className = `password-strength ${strength}`;
     
-    // Add strength class
-    indicator.classList.add(strength);
+    const strengthText = {
+        weak: 'Weak',
+        fair: 'Fair',
+        good: 'Good',
+        strong: 'Strong'
+    };
     
-    // Add strength text
-    const strengthText = indicator.querySelector('.strength-text');
-    if (strengthText) {
-        strengthText.remove();
-    }
-    
-    const text = document.createElement('span');
-    text.className = 'strength-text';
-    text.textContent = `Password strength: ${strength.charAt(0).toUpperCase() + strength.slice(1)}`;
-    text.style.cssText = `
-        font-size: 0.75rem;
-        color: ${getStrengthColor(strength)};
-        margin-top: 0.25rem;
-        display: block;
-    `;
-    indicator.appendChild(text);
+    indicator.setAttribute('aria-label', `Password strength: ${strengthText[strength]}`);
 }
 
 function getStrengthColor(strength) {
     const colors = {
-        weak: '#ff6b6b',
-        fair: '#ffa726',
-        good: '#66bb6a',
-        strong: '#4caf50'
+        weak: '#dc3545',
+        fair: '#ffc107',
+        good: '#17a2b8',
+        strong: '#28a745'
     };
-    return colors[strength] || '#999';
+    return colors[strength] || '#dc3545';
 }
 
 // Enhanced Social Buttons
 function initSocialButtons() {
     const socialButtons = document.querySelectorAll('.social-btn');
     
-    socialButtons.forEach(btn => {
-        btn.addEventListener('click', handleSocialSignup);
-        btn.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleSocialSignup(e);
-            }
-        });
+    socialButtons.forEach(button => {
+        button.addEventListener('click', handleSocialSignup);
+        button.addEventListener('mouseenter', addHoverEffect);
+        button.addEventListener('mouseleave', removeHoverEffect);
     });
 }
 
 function handleSocialSignup(e) {
-    e.preventDefault();
-    const btn = e.target.closest('.social-btn');
-    const provider = btn.classList.contains('google-btn') ? 'Google' : 'Facebook';
+    const provider = e.currentTarget.classList.contains('google-btn') ? 'google' : 'facebook';
     
-    // Show loading state
-    const originalContent = btn.innerHTML;
-    btn.innerHTML = `
-        <div class="spinner"></div>
-        <span>Connecting to ${provider}...</span>
-    `;
-    btn.disabled = true;
-    btn.classList.add('loading');
+    // Add loading state
+    const button = e.currentTarget;
+    const originalContent = button.innerHTML;
+    button.innerHTML = '<div class="spinner"></div><span>Connecting...</span>';
+    button.disabled = true;
     
-    // Simulate social signup (replace with actual implementation)
+    // Simulate API call
     setTimeout(() => {
-        showFormError(`${provider} signup is not implemented yet. Please use the regular signup form.`);
-        btn.innerHTML = originalContent;
-        btn.disabled = false;
-        btn.classList.remove('loading');
+        button.innerHTML = originalContent;
+        button.disabled = false;
+        showFormError('Social signup is not implemented yet. Please use the regular signup form.');
     }, 2000);
 }
 
 // Enhanced Form Submission
 function initFormSubmission() {
     const form = document.getElementById('signupForm');
-    const signupBtn = document.getElementById('signupBtn');
+    const submitBtn = form.querySelector('.signup-btn');
     
     form.addEventListener('submit', function(e) {
-        if (!validateForm(e)) return;
+        if (!validateForm(e)) {
+            return;
+        }
         
-        // Show loading state
-        signupBtn.classList.add('loading');
-        signupBtn.disabled = true;
+        // Add loading state
+        submitBtn.classList.add('loading');
         
-        // Simulate form processing (remove in production)
+        // Simulate form submission
         setTimeout(() => {
-            // Show success state briefly before redirect
-            signupBtn.classList.remove('loading');
-            signupBtn.classList.add('success');
+            submitBtn.classList.remove('loading');
+            submitBtn.classList.add('success');
             
-            // Clear saved form data
-            clearSavedFormData();
+            // Show success notification
+            showSuccessNotification('Account created successfully!');
             
+            // Redirect after success
             setTimeout(() => {
-                // Form will submit normally
-            }, 1000);
-        }, 1500);
+                window.location.href = 'login.php';
+            }, 2000);
+        }, 2000);
     });
 }
 
-// Enhanced Phone Formatting
+// Phone Number Formatting
 function initPhoneFormatting() {
     const phoneField = document.getElementById('phoneNum');
     
@@ -419,7 +380,6 @@ function initPhoneFormatting() {
         phoneField.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             
-            // Format phone number
             if (value.length > 0) {
                 if (value.length <= 3) {
                     value = `(${value}`;
@@ -437,7 +397,6 @@ function initPhoneFormatting() {
 
 // Enhanced Animations
 function initAnimations() {
-    // Intersection Observer for scroll animations
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -452,42 +411,40 @@ function initAnimations() {
         });
     }, observerOptions);
     
-    // Observe elements for animation
-    const animatedElements = document.querySelectorAll('.benefit-item, .stat-item');
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+    // Observe form sections
+    const formSections = document.querySelectorAll('.form-section');
+    formSections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'all 0.6s ease';
+        observer.observe(section);
     });
 }
 
 // Enhanced Error Handling
 function initErrorHandling() {
-    // Global error handler
-    window.addEventListener('error', (e) => {
-        console.error('Global error:', e.error);
-        showFormError('An unexpected error occurred. Please try again.');
-    });
-    
-    // Unhandled promise rejection handler
-    window.addEventListener('unhandledrejection', (e) => {
-        console.error('Unhandled promise rejection:', e.reason);
-        showFormError('An unexpected error occurred. Please try again.');
+    // Auto-hide error messages after 5 seconds
+    const errorMessages = document.querySelectorAll('.error-message, .success-message');
+    errorMessages.forEach(message => {
+        setTimeout(() => {
+            if (message.parentElement) {
+                message.style.opacity = '0';
+                setTimeout(() => {
+                    message.remove();
+                }, 300);
+            }
+        }, 5000);
     });
 }
 
 function showFormError(message) {
-    // Remove existing error message
-    const existingError = document.getElementById('errorMessage');
-    if (existingError) {
-        existingError.remove();
-    }
+    // Remove existing error messages
+    const existingErrors = document.querySelectorAll('.error-message');
+    existingErrors.forEach(error => error.remove());
     
     // Create new error message
     const errorDiv = document.createElement('div');
     errorDiv.className = 'error-message';
-    errorDiv.id = 'errorMessage';
     errorDiv.innerHTML = `
         <div class="error-icon">
             <i class="fas fa-exclamation-triangle"></i>
@@ -496,51 +453,49 @@ function showFormError(message) {
             <span class="error-title">Error</span>
             <span class="error-text">${message}</span>
         </div>
-        <button type="button" class="error-close" onclick="closeError()">
+        <button class="error-close" onclick="this.parentElement.remove()">
             <i class="fas fa-times"></i>
         </button>
     `;
     
-    // Insert at the beginning of the form
+    // Insert before form
     const form = document.getElementById('signupForm');
-    form.insertBefore(errorDiv, form.firstChild);
+    form.parentElement.insertBefore(errorDiv, form);
     
     // Auto-hide after 5 seconds
     setTimeout(() => {
-        if (errorDiv.parentNode) {
-            closeError();
+        if (errorDiv.parentElement) {
+            errorDiv.style.opacity = '0';
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 300);
         }
     }, 5000);
 }
 
 function closeError() {
-    const errorMessage = document.getElementById('errorMessage');
-    if (errorMessage) {
-        errorMessage.style.animation = 'slideOutUp 0.3s ease';
+    const errorMessages = document.querySelectorAll('.error-message');
+    errorMessages.forEach(message => {
+        message.style.opacity = '0';
         setTimeout(() => {
-            if (errorMessage.parentNode) {
-                errorMessage.remove();
-            }
+            message.remove();
         }, 300);
-    }
+    });
 }
 
 function closeSuccess() {
-    const successMessage = document.getElementById('successMessage');
-    if (successMessage) {
-        successMessage.style.animation = 'slideOutUp 0.3s ease';
+    const successMessages = document.querySelectorAll('.success-message');
+    successMessages.forEach(message => {
+        message.style.opacity = '0';
         setTimeout(() => {
-            if (successMessage.parentNode) {
-                successMessage.remove();
-            }
+            message.remove();
         }, 300);
-    }
+    });
 }
 
 // Enhanced Hover Effects
 function initHoverEffects() {
-    // Add hover effects to interactive elements
-    const interactiveElements = document.querySelectorAll('.signup-btn, .social-btn, .login-link');
+    const interactiveElements = document.querySelectorAll('.form-group, .checkbox-container, .social-btn');
     
     interactiveElements.forEach(element => {
         element.addEventListener('mouseenter', addHoverEffect);
@@ -549,27 +504,30 @@ function initHoverEffects() {
 }
 
 function addHoverEffect(e) {
-    const element = e.target;
-    element.style.transform = 'translateY(-2px)';
-    element.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+    e.currentTarget.style.transform = 'translateY(-2px)';
+    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.1)';
 }
 
 function removeHoverEffect(e) {
-    const element = e.target;
-    element.style.transform = '';
-    element.style.boxShadow = '';
+    e.currentTarget.style.transform = 'translateY(0)';
+    e.currentTarget.style.boxShadow = 'none';
 }
 
 // Enhanced Keyboard Navigation
 function initKeyboardNavigation() {
     const form = document.getElementById('signupForm');
-    const inputs = form.querySelectorAll('input');
+    const inputs = form.querySelectorAll('input, button, select, textarea');
     
     inputs.forEach((input, index) => {
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && index < inputs.length - 1) {
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.type !== 'textarea') {
                 e.preventDefault();
-                inputs[index + 1].focus();
+                const nextInput = inputs[index + 1];
+                if (nextInput) {
+                    nextInput.focus();
+                } else {
+                    form.submit();
+                }
             }
         });
     });
@@ -577,22 +535,21 @@ function initKeyboardNavigation() {
 
 // Enhanced Accessibility
 function initAccessibility() {
-    // Add ARIA labels and roles
-    const signupBtn = document.getElementById('signupBtn');
-    const passwordToggles = document.querySelectorAll('.password-toggle');
-    
-    if (signupBtn) {
-        signupBtn.setAttribute('aria-label', 'Create your account');
-    }
-    
-    passwordToggles.forEach(toggle => {
-        toggle.setAttribute('aria-label', 'Show password');
+    // Add ARIA labels
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        if (!input.getAttribute('aria-label')) {
+            const label = input.previousElementSibling;
+            if (label && label.tagName === 'LABEL') {
+                input.setAttribute('aria-label', label.textContent);
+            }
+        }
     });
     
-    // Add skip link for screen readers
+    // Add skip link
     const skipLink = document.createElement('a');
     skipLink.href = '#signupForm';
-    skipLink.textContent = 'Skip to signup form';
+    skipLink.textContent = 'Skip to main content';
     skipLink.className = 'skip-link';
     skipLink.style.cssText = `
         position: absolute;
@@ -603,58 +560,55 @@ function initAccessibility() {
         padding: 8px;
         text-decoration: none;
         border-radius: 4px;
-        z-index: 1000;
-        transition: top 0.3s;
+        z-index: 1001;
     `;
-    
-    skipLink.addEventListener('focus', () => {
-        skipLink.style.top = '6px';
+    skipLink.addEventListener('focus', function() {
+        this.style.top = '6px';
+    });
+    skipLink.addEventListener('blur', function() {
+        this.style.top = '-40px';
     });
     
-    skipLink.addEventListener('blur', () => {
-        skipLink.style.top = '-40px';
-    });
-    
-    document.body.appendChild(skipLink);
+    document.body.insertBefore(skipLink, document.body.firstChild);
 }
 
-// Auto-save functionality
+// Enhanced Auto Save
 function initAutoSave() {
     const form = document.getElementById('signupForm');
-    const inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"]');
+    const inputs = form.querySelectorAll('input');
     
     // Load saved data on page load
     loadSavedFormData();
     
-    // Auto-save on input
+    // Auto save on input change
     inputs.forEach(input => {
-        input.addEventListener('input', debounce(autoSaveForm, 500));
+        input.addEventListener('input', debounce(autoSaveForm, 1000));
     });
 }
 
 function autoSaveForm() {
-    const formData = {};
-    const inputs = document.querySelectorAll('#signupForm input[type="text"], #signupForm input[type="email"], #signupForm input[type="tel"]');
+    const form = document.getElementById('signupForm');
+    const formData = new FormData(form);
+    const data = {};
     
-    inputs.forEach(input => {
-        if (input.value.trim()) {
-            formData[input.name] = input.value;
-        }
-    });
+    for (let [key, value] of formData.entries()) {
+        data[key] = value;
+    }
     
-    localStorage.setItem('signupFormData', JSON.stringify(formData));
+    localStorage.setItem('signupFormData', JSON.stringify(data));
 }
 
 function loadSavedFormData() {
     const savedData = localStorage.getItem('signupFormData');
     if (savedData) {
-        const formData = JSON.parse(savedData);
+        const data = JSON.parse(savedData);
+        const form = document.getElementById('signupForm');
         
-        Object.keys(formData).forEach(fieldName => {
-            const input = document.querySelector(`input[name="${fieldName}"]`);
-            if (input) {
-                input.value = formData[fieldName];
-                input.classList.add('has-value');
+        Object.keys(data).forEach(key => {
+            const input = form.querySelector(`[name="${key}"]`);
+            if (input && !input.value) {
+                input.value = data[key];
+                input.dispatchEvent(new Event('input'));
             }
         });
     }
@@ -667,37 +621,36 @@ function clearSavedFormData() {
 // Success Notification
 function showSuccessNotification(message) {
     const notification = document.getElementById('successNotification');
-    const messageElement = notification.querySelector('.notification-message');
-    
-    messageElement.textContent = message;
-    notification.classList.add('show');
-    
-    // Auto-hide after 4 seconds
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 4000);
+    if (notification) {
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 5000);
+    }
 }
 
-// Utility Functions
+// Enhanced Ripple Effect
 function addRippleEffect(element) {
     const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(102, 126, 234, 0.3);
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+        pointer-events: none;
+    `;
+    
     const rect = element.getBoundingClientRect();
     const size = Math.max(rect.width, rect.height);
     const x = event.clientX - rect.left - size / 2;
     const y = event.clientY - rect.top - size / 2;
     
-    ripple.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}px;
-        top: ${y}px;
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        transform: scale(0);
-        animation: ripple 0.6s linear;
-        pointer-events: none;
-    `;
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
     
     element.appendChild(ripple);
     
@@ -706,6 +659,7 @@ function addRippleEffect(element) {
     }, 600);
 }
 
+// Utility Functions
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -724,41 +678,22 @@ function isValidEmail(email) {
 }
 
 function isValidPhone(phone) {
-    // Remove all non-digits
-    const digits = phone.replace(/\D/g, '');
-    return digits.length >= 10 && digits.length <= 15;
+    // Remove all non-digit characters
+    const cleaned = phone.replace(/\D/g, '');
+    
+    // Check if it's a valid US phone number (10 digits)
+    if (cleaned.length === 10) {
+        return true;
+    }
+    
+    // Check if it's a valid international number (7-15 digits)
+    if (cleaned.length >= 7 && cleaned.length <= 15) {
+        return true;
+    }
+    
+    return false;
 }
 
-// Add ripple animation CSS
-const rippleStyle = document.createElement('style');
-rippleStyle.textContent = `
-    @keyframes ripple {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-    
-    @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-5px); }
-        75% { transform: translateX(5px); }
-    }
-    
-    @keyframes slideOutUp {
-        from {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        to {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-    }
-`;
-document.head.appendChild(rippleStyle);
-
-// Performance optimization
 function throttle(func, limit) {
     let inThrottle;
     return function() {
@@ -772,18 +707,32 @@ function throttle(func, limit) {
     };
 }
 
-// Initialize performance optimizations
-const throttledScroll = throttle(() => {
-    // Handle scroll events efficiently
-}, 16);
-
-window.addEventListener('scroll', throttledScroll);
-
 // Cleanup function
 function cleanup() {
     // Remove event listeners and clean up resources
-    window.removeEventListener('scroll', throttledScroll);
+    const form = document.getElementById('signupForm');
+    if (form) {
+        form.removeEventListener('submit', validateForm);
+    }
+    
+    // Clear saved form data
+    clearSavedFormData();
 }
 
-// Cleanup on page unload
-window.addEventListener('beforeunload', cleanup); 
+// Add shake animation CSS
+const shakeAnimation = document.createElement('style');
+shakeAnimation.textContent = `
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+    
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(shakeAnimation); 
