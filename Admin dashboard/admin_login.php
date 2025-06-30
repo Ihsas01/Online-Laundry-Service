@@ -2,7 +2,7 @@
 session_start();
 include '../db_connect.php';
 
-if(isset($_POST['login'])) {
+if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
@@ -28,6 +28,7 @@ if(isset($_POST['login'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,7 +69,7 @@ if(isset($_POST['login'])) {
                         </div>
                         <h2 class="welcome-title">Admin Portal</h2>
                         <p class="welcome-subtitle">Access the administrative dashboard to manage your laundry service operations efficiently.</p>
-                        
+
                         <div class="features-list">
                             <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
                                 <div class="feature-icon">
@@ -107,7 +108,7 @@ if(isset($_POST['login'])) {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="security-notice">
                             <div class="security-icon">
                                 <i class="fas fa-shield-alt"></i>
@@ -130,9 +131,9 @@ if(isset($_POST['login'])) {
                             <h2>Admin Login</h2>
                             <p>Enter your credentials to access the admin panel</p>
                         </div>
-                        
+
                         <form method="post" action="admin_login.php" class="login-form" id="loginForm">
-                            <?php if(isset($error_message)): ?>
+                            <?php if (isset($error_message)): ?>
                                 <div class="error-message" id="errorMessage">
                                     <div class="error-icon">
                                         <i class="fas fa-exclamation-triangle"></i>
@@ -146,7 +147,7 @@ if(isset($_POST['login'])) {
                                     </button>
                                 </div>
                             <?php endif; ?>
-                            
+
                             <div class="form-group">
                                 <div class="input-wrapper">
                                     <div class="input-icon-container">
@@ -159,7 +160,7 @@ if(isset($_POST['login'])) {
                                 </div>
                                 <div class="input-hint">Enter your admin username</div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <div class="input-wrapper">
                                     <div class="input-icon-container">
@@ -175,7 +176,7 @@ if(isset($_POST['login'])) {
                                 </div>
                                 <div class="input-hint">Enter your admin password</div>
                             </div>
-                            
+
                             <div class="form-options">
                                 <label class="checkbox-container">
                                     <input type="checkbox" name="remember" id="remember">
@@ -183,7 +184,7 @@ if(isset($_POST['login'])) {
                                     <span class="checkbox-text">Remember me for 30 days</span>
                                 </label>
                             </div>
-                            
+
                             <button type="submit" class="login-btn" name="login" id="loginBtn">
                                 <div class="btn-content">
                                     <span class="btn-text">Sign In</span>
@@ -200,7 +201,7 @@ if(isset($_POST['login'])) {
                                     <span>Success!</span>
                                 </div>
                             </button>
-                            
+
                             <div class="form-footer">
                                 <p>Having trouble? <a href="#" class="help-link">Contact Support</a></p>
                                 <p class="back-link">← <a href="../index.php">Back to Main Site</a></p>
@@ -227,4 +228,5 @@ if(isset($_POST['login'])) {
 
     <script src="../js/admin_login.js"></script>
 </body>
+
 </html>
