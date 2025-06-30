@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all components
     initSidebar();
+    initActiveMenu();
     initSearch();
     initNotifications();
     initUserMenu();
@@ -46,6 +47,19 @@ function initSidebar() {
                 sidebar.classList.remove('active');
             }
         });
+    });
+}
+
+// Set active menu item
+function initActiveMenu() {
+    const currentPage = window.location.pathname.split('/').pop();
+    const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
+    
+    menuItems.forEach(item => {
+        const itemPage = item.getAttribute('href').split('/').pop();
+        if (itemPage === currentPage) {
+            item.classList.add('active');
+        }
     });
 }
 
