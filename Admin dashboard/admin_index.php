@@ -238,6 +238,10 @@ if (!$customers) {
                             <i class='bx bx-plus'></i>
                             Add Customer
                         </button>
+                        <button class="btn-primary" id="addAdminBtn">
+                            <i class='bx bx-user-plus'></i>
+                            Add Admin
+                        </button>
                     </div>
                 </div>
                 
@@ -386,6 +390,77 @@ if (!$customers) {
     <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
 
+    <!-- Add Admin Modal -->
+    <div class="modal" id="addAdminModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Admin</h3>
+                <button class="modal-close" id="closeAdminModal">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+            <form class="modal-form" id="addAdminForm" method="POST" action="add_admin.php">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select name="role" required>
+                        <option value="admin">Admin</option>
+                        <option value="super_admin">Super Admin</option>
+                        <option value="manager">Manager</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="status" required>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelAddAdmin">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Admin</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="../js/admin_dashboard.js"></script>
+    <script>
+    // Modal open/close logic using 'active' class for popup effect
+    const addAdminBtn = document.getElementById('addAdminBtn');
+    const addAdminModal = document.getElementById('addAdminModal');
+    const closeAdminModal = document.getElementById('closeAdminModal');
+    const cancelAddAdmin = document.getElementById('cancelAddAdmin');
+
+    addAdminBtn.onclick = function() {
+        addAdminModal.classList.add('active');
+    };
+    closeAdminModal.onclick = function() {
+        addAdminModal.classList.remove('active');
+    };
+    cancelAddAdmin.onclick = function() {
+        addAdminModal.classList.remove('active');
+    };
+    window.onclick = function(event) {
+        if (event.target === addAdminModal) {
+            addAdminModal.classList.remove('active');
+        }
+    };
+    </script>
 </body>
 </html>
