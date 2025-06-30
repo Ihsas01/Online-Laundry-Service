@@ -93,7 +93,21 @@ if (!$customers) {
     </nav>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <main class="main-content animated-gradient-bg">
+        <!-- Welcome Banner -->
+        <section class="welcome-banner" data-aos="fade-down">
+            <div class="banner-icon">
+                <i class='bx bxs-star'></i>
+            </div>
+            <div class="banner-content">
+                <h2>Welcome, Admin!</h2>
+                <p>Manage your laundry business with style. All your key stats and actions are here at a glance.</p>
+            </div>
+            <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle dark mode">
+                <i class='bx bx-moon'></i>
+            </button>
+        </section>
+
         <!-- Top Navigation -->
         <header class="top-nav">
             <div class="nav-left">
@@ -132,7 +146,7 @@ if (!$customers) {
         <!-- Dashboard Content -->
         <div class="dashboard-content">
             <!-- Statistics Cards -->
-            <div class="stats-grid">
+            <div class="stats-grid" data-aos="fade-up">
                 <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="stat-icon customers">
                         <i class='bx bxs-user'></i>
@@ -308,6 +322,13 @@ if (!$customers) {
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <div class="floating-action-btn" id="fab" title="Quick Actions">
+                <i class='bx bx-plus'></i>
+            </div>
+            <div class="global-loading-overlay" id="globalLoading">
+                <div class="spinner"></div>
             </div>
         </div>
     </main>

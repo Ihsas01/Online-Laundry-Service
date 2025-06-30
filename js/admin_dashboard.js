@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initAnimations();
     initTableActions();
     initStatistics();
+    initDarkMode();
+    initFloatingActionBtn();
+    initGlobalLoading();
 });
 
 // Sidebar functionality
@@ -518,4 +521,49 @@ function addSampleData() {
 }
 
 // Call sample data function
-addSampleData(); 
+addSampleData();
+
+function initDarkMode() {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (!darkModeToggle) return;
+    const icon = darkModeToggle.querySelector('i');
+    const body = document.body;
+    // Restore mode from localStorage
+    if (localStorage.getItem('darkMode') === 'true') {
+        body.classList.add('dark-mode');
+        icon.classList.remove('bx-moon');
+        icon.classList.add('bx-sun');
+    }
+    darkModeToggle.addEventListener('click', function() {
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark);
+        if (isDark) {
+            icon.classList.remove('bx-moon');
+            icon.classList.add('bx-sun');
+        } else {
+            icon.classList.remove('bx-sun');
+            icon.classList.add('bx-moon');
+        }
+    });
+}
+
+function initFloatingActionBtn() {
+    const fab = document.getElementById('fab');
+    if (!fab) return;
+    fab.addEventListener('click', function() {
+        // You can replace this with a modal or quick actions menu
+        alert('Quick Actions: Add User, Add Order, etc.');
+    });
+}
+
+function initGlobalLoading() {
+    window.showGlobalLoading = function() {
+        const overlay = document.getElementById('globalLoading');
+        if (overlay) overlay.classList.add('active');
+    };
+    window.hideGlobalLoading = function() {
+        const overlay = document.getElementById('globalLoading');
+        if (overlay) overlay.classList.remove('active');
+    };
+} 
