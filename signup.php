@@ -212,6 +212,7 @@ $connection->close();
                                             <label for="firstName" class="floating-label">Full Name</label>
                                             <div class="input-focus-border"></div>
                                             <div class="input-glow"></div>
+                                            <div class="field-error"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -220,6 +221,7 @@ $connection->close();
                                             <label for="userName" class="floating-label">Username</label>
                                             <div class="input-focus-border"></div>
                                             <div class="input-glow"></div>
+                                            <div class="field-error"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -229,6 +231,7 @@ $connection->close();
                                         <label for="email" class="floating-label">Email Address</label>
                                         <div class="input-focus-border"></div>
                                         <div class="input-glow"></div>
+                                        <div class="field-error"></div>
                                     </div>
                                 </div>
                             </div>
@@ -243,6 +246,7 @@ $connection->close();
                                             <label for="phoneNum" class="floating-label">Phone Number</label>
                                             <div class="input-focus-border"></div>
                                             <div class="input-glow"></div>
+                                            <div class="field-error"></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -251,6 +255,7 @@ $connection->close();
                                             <label for="address" class="floating-label">Full Address</label>
                                             <div class="input-focus-border"></div>
                                             <div class="input-glow"></div>
+                                            <div class="field-error"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -266,6 +271,7 @@ $connection->close();
                                             <label for="password" class="floating-label">Password</label>
                                             <div class="input-focus-border"></div>
                                             <div class="input-glow"></div>
+                                            <div class="field-error"></div>
                                             <button type="button" class="password-toggle" onclick="togglePassword('password')">
                                                 <i class="fas fa-eye"></i>
                                             </button>
@@ -278,6 +284,7 @@ $connection->close();
                                             <label for="confirmPassword" class="floating-label">Confirm Password</label>
                                             <div class="input-focus-border"></div>
                                             <div class="input-glow"></div>
+                                            <div class="field-error"></div>
                                             <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
                                                 <i class="fas fa-eye"></i>
                                             </button>
